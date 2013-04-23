@@ -2,13 +2,60 @@
 <html>
 <head>
   <title>Microblog</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <%= stylesheet_link_tag   "application", :media => "all" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+			 <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+          	</button>
 
-<%= yield %>
+          <a class="brand" href="#">microblog</a>
+			<ul class="nav pull-right">
+				<li><a href="#">signin</a></li>
+				<li><%= link_to "register",new_user_path %></li>
+			</ul>
+			</div>
+			
+		</div>
+	</div>
 
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span2">
+				<ul class="nav nav-list">
+					<li class="nav-header">Microblog</li>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">@me</a></li>
+					<li><a href="#">comments</a></li>
+					<li class="nav-header">group</li>
+					<li><a href="#">classmates</a></li>
+					<li><a href="#">family</a></li>
+				</ul>
+			</div>
+			<div class="span8">
+				<%= yield %>
+			</div>
+			<div class="span2">
+				<ul class="thumbnails">
+					<li >
+						<a href="#" class="thumbnail">
+     						 <%=image_tag( "gravatar-user-420.png",:size=>"60X60") %>
+    					</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+  </script>
 </body>
+
 </html>

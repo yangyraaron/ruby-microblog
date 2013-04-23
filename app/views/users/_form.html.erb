@@ -1,4 +1,4 @@
-<%= form_for(@user) do |f| %>
+<%= form_for @user,:html=>{:class=>".form-horizontal"} do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -11,27 +11,22 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.number_field :user_id %>
+  <div class="control-group">
+    <%= f.label(:account,:class=>"control-label span2") %>
+    <div class="controls">
+        <%= f.text_field :account,:placeholder=>"Account" %>
+    </div>
+
   </div>
-  <div class="field">
-    <%= f.label :account %><br />
-    <%= f.text_field :account %>
+  <div class="control-group">
+    <%= f.label :email,:class=>"control-label span2" %>
+    <%= f.text_field :email,:placeholder=>"Email" %>
   </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
+  <div class="control-group">
+    <%= f.label :dynamic_desc,:class=>"control-label span2" %>
+    <%= f.text_field :dynamic_desc,:placeholder=>"Dynamic desc" %>
   </div>
-  <div class="field">
-    <%= f.label :dynamic_desc %><br />
-    <%= f.text_field :dynamic_desc %>
-  </div>
-  <div class="field">
-    <%= f.label :image_id %><br />
-    <%= f.number_field :image_id %>
-  </div>
-  <div class="actions">
+  <div class="control-group">
     <%= f.submit %>
   </div>
 <% end %>

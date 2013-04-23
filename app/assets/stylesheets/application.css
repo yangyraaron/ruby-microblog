@@ -11,3 +11,11 @@
  *= require_self
  *= require_tree .
  */
+
+ .center{
+ 	text-align: center;
+ }
+ .inline{
+ 	display:inline;
+ 	position: relative;
+ }
