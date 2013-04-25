@@ -15,7 +15,21 @@
  .center{
  	text-align: center;
  }
- .inline{
- 	display:inline;
- 	position: relative;
+
+ .h-align{
+ 	margin-right: 10px;
+ 	text-align:left;
+ 	line-height: 30px;	
+ 	display: inline-block;
+ }
+  .right{
+ 	text-align: right;
+ }
+
+ .inline-block{
+ 	display: inline-block;
+ }
+
+ .content{
+ 	margin: 50px 20px 20px 20px;
  }

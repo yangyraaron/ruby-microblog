@@ -1,32 +1,86 @@
-<%= form_for @user,:html=>{:class=>".form-horizontal"} do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="control-group">
-    <%= f.label(:account,:class=>"control-label span2") %>
-    <div class="controls">
-        <%= f.text_field :account,:placeholder=>"Account" %>
-    </div>
-
-  </div>
-  <div class="control-group">
-    <%= f.label :email,:class=>"control-label span2" %>
-    <%= f.text_field :email,:placeholder=>"Email" %>
-  </div>
-  <div class="control-group">
-    <%= f.label :dynamic_desc,:class=>"control-label span2" %>
-    <%= f.text_field :dynamic_desc,:placeholder=>"Dynamic desc" %>
-  </div>
-  <div class="control-group">
-    <%= f.submit %>
-  </div>
+<%= form_for @user,:html=>
+{:class=>".form-horizontal"} do |f| %>
+<% if @user.errors.any? %>
+<div id="error_explanation">
+  <h2>
+    <%= pluralize(@user.errors.count, "error") %>prohibited this user from being saved:</h2>
+  <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+    <li>
+      <%= msg %></li>
+    <% end %></ul>
+</div>
 <% end %>
+
+<div class="control-group">
+  <%= f.label(:account,:class=>
+  "control-label h-align right span4") %>
+  <%= f.text_field :account,:placeholder=>"Account" %></div>
+
+<div id="password_group" class="control-group">
+  <%= f.label(:password,:class=>
+  "control-label h-align right span4") %>
+  <%= f.password_field :password,:placeholder=>"Password" %></div>
+
+<div id="confirm_group" class="control-group">
+  <label class="control-label h-align right span4">Confirm Password</label>
+  <input id="confirm_password" type="password" placeholder="Password" />
+</div>
+
+<div class="control-group">
+  <%= f.label :email,:class=>
+  "control-label h-align right span4" %>
+  <%= f.text_field :email,:placeholder=>"Email" %></div>
+
+<div class="control-group">
+  <%= f.label :dynamic_desc,:class=>
+  "control-label h-align right span4" %>
+  <%= f.text_field :dynamic_desc,:placeholder=>"Dynamic desc" %></div>
+
+<div class="control-group center">
+  <%= f.submit %></div>
+<% end %>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("input[type='submit']").click(function(e) {
+    var password = $('#user_password').val();
+    var confirmPassword = $('#confirm_password').val();
+    var isValide = true;
+
+    console.log('password', password);
+    console.log('confirmPassword', confirmPassword);
+
+    if(password===""){
+      var alert = showAlert("password is empty!",$("#password_group"));
+      isValide = false;
+    }else if (password !== confirmPassword) {
+      var alert = showAlert("two typed password are different!",$("#confirm_group"));
+      isValide = false;
+    }
+
+    if(!isValide){
+      //$(this).attr({disabled:true});
+      e.preventDefault();
+
+    }else{
+      //$(this).attr({disabled:false});
+    }
+
+  });
+
+  function showAlert(msg,container){
+    var alert = container.find("#user_alert");
+
+    if(alert.length==0){
+       alert = $("<div id='user_alert' class='alert alert-error'>"+msg+"</div>");
+       container.append(alert);
+    }else{
+      alert.text(msg);
+      alert.css({visibility:'visible'});
+    }
+
+  }
+});
+
+</script>

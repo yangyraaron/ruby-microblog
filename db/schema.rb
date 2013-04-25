@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130423020749) do
+ActiveRecord::Schema.define(:version => 20130425052950) do
 
   create_table "users", :id => false, :force => true do |t|
     t.integer  "user_id",         :limit => 8
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20130423020749) do
     t.integer  "following_count"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
+    t.string   "password"
   end
 
 end

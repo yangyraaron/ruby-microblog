@@ -42,6 +42,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
 
+    @user.user_id=IdGenerator.generate_id
+
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
