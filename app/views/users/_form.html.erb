@@ -17,15 +17,19 @@
   "control-label h-align right span4") %>
   <%= f.text_field :account,:placeholder=>"Account" %></div>
 
+<% if !@user.account || @user.account.empty? %>
+
 <div id="password_group" class="control-group">
   <%= f.label(:password,:class=>
   "control-label h-align right span4") %>
   <%= f.password_field :password,:placeholder=>"Password" %></div>
 
 <div id="confirm_group" class="control-group">
-  <label class="control-label h-align right span4">Confirm Password</label>
-  <input id="confirm_password" type="password" placeholder="Password" />
+  <%= f.label(:password_confirmation,:class=>
+  "control-label h-align right span4") %>
+  <%= f.password_field :password_confirmation,:placeholder=>"Confirm Password" %>
 </div>
+<%end%>
 
 <div class="control-group">
   <%= f.label :email,:class=>
@@ -37,7 +41,7 @@
   "control-label h-align right span4" %>
   <%= f.text_field :dynamic_desc,:placeholder=>"Dynamic desc" %></div>
 
-<div class="control-group center">
+<div class="span8 pull-right">
   <%= f.submit %></div>
 <% end %>
 
@@ -45,7 +49,7 @@
 $(document).ready(function() {
   $("input[type='submit']").click(function(e) {
     var password = $('#user_password').val();
-    var confirmPassword = $('#confirm_password').val();
+    var confirmPassword = $('#user_password_confirmation').val();
     var isValide = true;
 
     console.log('password', password);

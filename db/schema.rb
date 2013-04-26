@@ -11,12 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130425052950) do
+ActiveRecord::Schema.define(:version => 20130426051606) do
 
   create_table "users", :id => false, :force => true do |t|
-    t.integer  "user_id",         :limit => 8
-    t.string   "account"
-    t.string   "email"
+    t.integer  "user_id",         :limit => 8, :null => false
+    t.string   "account",                      :null => false
+    t.string   "hashed_password",              :null => false
+    t.string   "email",                        :null => false
     t.string   "dynamic_desc"
     t.integer  "image_id",        :limit => 8
     t.integer  "msg_count",       :limit => 8
@@ -24,7 +25,9 @@ ActiveRecord::Schema.define(:version => 20130425052950) do
     t.integer  "following_count"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
-    t.string   "password"
+    t.string   "salt"
   end
+
+  add_index "users", ["account"], :name => "index_users_on_account", :unique => true
 
 end

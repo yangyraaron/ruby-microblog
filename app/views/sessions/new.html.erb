@@ -1,0 +1,26 @@
+<div>
+	<% if flash[:alert] %>
+		<p id="notice"><%= flash[:alert]%></p>
+	<% end %>
+
+	<%= form_tag do %>
+		<fieldset>
+			<legend>Please Sign In</legend>
+
+			<div class="control-group">
+				<label for="account" class="control-label h-align right span4">Account</label>
+				<%=text_field_tag :account,nil,:placeholder=>"Account"%>
+			</div>
+
+			<div>
+				<label for="password" class="control-label h-align right span4">Password</label>
+				<%=password_field_tag :password,nil,:placeholder=>"Password"%>
+			</div>
+
+			<div class="span8 pull-right">
+				<%=submit_tag "Sign In"%>
+			</div>
+
+		</fieldset>
+	<%end%>
+</div>
