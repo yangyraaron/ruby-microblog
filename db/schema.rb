@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130426051606) do
+ActiveRecord::Schema.define(:version => 20130427013434) do
+
+  create_table "fans", :id => false, :force => true do |t|
+    t.integer  "user_id",    :limit => 8, :null => false
+    t.integer  "fan_id",     :limit => 8, :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  create_table "follows", :id => false, :force => true do |t|
+    t.integer  "user_id",      :limit => 8, :null => false
+    t.integer  "following_id", :limit => 8, :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
 
   create_table "users", :id => false, :force => true do |t|
     t.integer  "user_id",         :limit => 8, :null => false
@@ -26,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20130426051606) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.string   "salt"
+    t.string   "password"
   end
 
   add_index "users", ["account"], :name => "index_users_on_account", :unique => true

@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
   	if(password.present?)
   		generate_salt
-  		self.hashed_password=self.class.encrpty_password(password,salt)
+  		self.hashed_password=self.class.encrpty_password(password,self.salt)
   	end
   end
 

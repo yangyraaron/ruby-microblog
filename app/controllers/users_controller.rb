@@ -1,15 +1,15 @@
 class UsersController < ApplicationController
-  skip_before_filter :authorize,:only=>[:new,:create]
+  skip_before_filter :authorize,:only=>[:new,:create,:show]
   # GET /users
   # GET /users.json
-  # def index
-  #   @users = User.all
+  def index
+    @users = User.all
 
-  #   respond_to do |format|
-  #     format.html # index.html.erb
-  #     format.json { render json: @users }
-  #   end
-  # end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @users }
+    end
+  end
 
   # GET /users/1
   # GET /users/1.json
@@ -44,9 +44,14 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
 
     @user.user_id=IdGenerator.generate_id
+    @user.following_count=0;
+    @user.msg_count=0;
+    @user.fans_count=0;
 
     respond_to do |format|
       if @user.save
+        signin(@user.account,@user.password)
+        
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
