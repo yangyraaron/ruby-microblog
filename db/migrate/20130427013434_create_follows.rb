@@ -1,5 +1,5 @@
 class CreateFollows < ActiveRecord::Migration
-  def change
+  def self.up
     create_table :follows,:id=>false do |t|
       t.integer :user_id,:null=>true,:limit=>8
       t.integer :following_id,:null=>true,:limit=>8
@@ -8,13 +8,9 @@ class CreateFollows < ActiveRecord::Migration
     end
     execute "ALTER TABLE follows ADD PRIMARY KEY (user_id,following_id);"
 
-    create_table :fans,:id=>false do |t|
-      t.integer :user_id,:null=>true,:limit=>8
-      t.integer :fan_id,:null=>true,:limit=>8
+  end
 
-
-      t.timestamps
-    end
-    execute "ALTER TABLE fans ADD PRIMARY KEY (user_id,fan_id);"
+  def self.down
+    drop_table :follows
   end
 end

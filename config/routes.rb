@@ -1,4 +1,7 @@
 Microblog::Application.routes.draw do
+  resources :fans
+
+
   resources :follows
 
 

@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   validate :password_must_be_present
 
   attr_accessible :account, :dynamic_desc, :email, :image_id, :user_id,:password_confirmation,:password
-  attr_accessor :password_confirmation
+  attr_accessor :password_confirmation,:relation
   attr_reader  :password
 
   def password=(password)
