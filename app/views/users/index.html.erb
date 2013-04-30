@@ -4,6 +4,7 @@
 
 <div class="span12">
     <ul>
+        <%if @users!=nil%>
         <%@users.each do |user|%>
         <li>
             <div class="span2">
@@ -46,5 +47,6 @@
 
         </li>
 
+        <%end%>
         <%end%></ul>
 </div>

@@ -3,7 +3,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    logger.info("searching user with : #{params["filter"] }")
+    @users = User.search(params["filter"])
 
     respond_to do |format|
       format.html # index.html.erb

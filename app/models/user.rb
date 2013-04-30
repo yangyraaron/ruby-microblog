@@ -34,6 +34,13 @@ class User < ActiveRecord::Base
   	end
   end
 
+  def self.search(filter)
+    if(filter.present?)
+      like_filter="%#{filter}%"
+      self.where(["account like ? or email like ?",like_filter,like_filter])
+    end
+  end
+
   private
   	def password_must_be_present
   		errors.add(:password,"Missing a password") unless hashed_password.present?
