@@ -1,3 +1,8 @@
+
 class Fan < ActiveRecord::Base
-  # attr_accessible :title, :body
+  self.primary_key=:id
+
+  attr_accessible :id,:fans_id, :user_id
+
+  belongs_to :user
 end

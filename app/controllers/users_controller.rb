@@ -4,7 +4,11 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     logger.info("searching user with : #{params["filter"] }")
-    @users = User.search(params["filter"])
+    @users = User.search(current_user.user_id,params["filter"])
+
+    @users.each do |user|
+      logger.info("user : #{user.is_following_by_current}")
+    end
 
     respond_to do |format|
       format.html # index.html.erb

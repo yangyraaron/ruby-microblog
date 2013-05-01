@@ -27,6 +27,9 @@
                 <p>please write your dynamic information</p>
                 <%end%>
 
+                <%str_btn="follow"%>
+                <%str_btn="unfollow" if user.is_following_by_current%>
+                <%=submit_tag str_btn %> 
                 <ul class="inline ul-user-list">
                     <li  class="li-user-list-item">
                         following&nbsp;

@@ -14,18 +14,26 @@
 ActiveRecord::Schema.define(:version => 20130430123922) do
 
   create_table "fans", :id => false, :force => true do |t|
+    t.integer  "id",         :limit => 8, :null => false
     t.integer  "user_id",    :limit => 8, :null => false
     t.integer  "fans_id",    :limit => 8, :null => false
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
 
+  add_index "fans", ["fans_id"], :name => "index_fans_on_fans_id"
+  add_index "fans", ["user_id"], :name => "index_fans_on_user_id"
+
   create_table "follows", :id => false, :force => true do |t|
+    t.integer  "id",           :limit => 8, :null => false
     t.integer  "user_id",      :limit => 8, :null => false
     t.integer  "following_id", :limit => 8, :null => false
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
   end
+
+  add_index "follows", ["following_id"], :name => "index_follows_on_following_id"
+  add_index "follows", ["user_id"], :name => "index_follows_on_user_id"
 
   create_table "users", :id => false, :force => true do |t|
     t.integer  "user_id",         :limit => 8, :null => false
