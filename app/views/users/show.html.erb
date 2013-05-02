@@ -1,27 +1,44 @@
-<p id="notice"><%= notice %></p>
+<div class="span4">
+  <ul class="thumbnails">
+    <li >
+      <a href="#" class="thumbnail">
+        <%=image_tag( "gravatar-user-420.png",:size=>"60X60") %></a>
+    </li>
+  </ul>
+  <ul class="inline center">
+    <li>
+      <ul class="ul-user-bar">
+        <li><span>following</span></li>
+        <li>
+          <%=@user.following_count%></li>
+      </ul>
+    </li>
+    <li>
+      <ul class="ul-user-bar">
+        <li>fans</li>
 
-<p>
-  <b>User:</b>
-  <%= @user.user_id %>
-</p>
+        <li>
+          <%=@user.fans_count%></li>
 
-<p>
-  <b>Account:</b>
-  <%= @user.account %>
-</p>
+      </ul>
+    </li>
+    <li>
+      <ul class="ul-user-bar">
+        <li>message</li>
+        <li>
+          <%=@user.msg_count%></li>
+      </ul>
+    </li>
 
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
-</p>
+  </ul>
+</div>
 
-<p>
-  <b>Dynamic desc:</b>
-  <%= @user.dynamic_desc %>
-</p>
+<div class="span8">
+  <h3><%=@user.account%></h3>
 
-<p>
-  <b>Image:</b>
-  <%= @user.image_id %>
-</p>
-
+  <% if @user.dynamic_desc!=nil%>
+  <p><%=@user.dynamic_desc%></p>
+  <%else%>
+  <p>please write your dynamic information</p>
+  <%end%>
+</div>

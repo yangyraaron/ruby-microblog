@@ -1,4 +1,10 @@
 Microblog::Application.routes.draw do
+  resources :fans
+
+
+  resources :follows
+
+
   # get "sessions/new"
 
   # post "sessions/create"

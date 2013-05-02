@@ -29,3 +29,22 @@
  .inline-block{
  	display: inline-block;
  }
+ .content {
+ 	margin-top: 60px;
+ }
+ .ul-user-bar{
+ 	margin-left: 5px;
+ }
+ .ul-user-list{
+ 	margin-left: 0px
+ }
+  .ul-user-list .li-user-list-item{
+ 	margin: 0px;
+ 	padding-left: 0px;
+ 	padding-right: 0px;
+ }
+
+
+ li{
+ 	list-style-type: none;
+ }

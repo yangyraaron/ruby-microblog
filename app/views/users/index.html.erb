@@ -1,28 +1,70 @@
-<h1>Listing users</h1>
+<fieldset>
+    <legend>User Searching List</legend>
+</fieldset>
 
-<table>
-  <tr>
-    <th>User</th>
-    <th>Account</th>
-    <th>Email</th>
-    <th>Dynamic desc</th>
-    <th>Image</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="span12">
+    <ul>
+        <%if @users!=nil%>
+        <%@users.each do |user|%>
+        <li>
+            <div class="span2">
+                <ul class="thumbnails">
+                    <li >
+                        <a href="#" class="thumbnail">
+                            <%=image_tag("gravatar-user-420.png",:size=>"60X60") %></a>
+                    </li>
+                </ul>
+            </div>
 
-<% @users.each do |user| %>
-  <tr>
-    <td><%= user.user_id %></td>
-    <td><%= user.account %></td>
-    <td><%= user.email %></td>
-    <td><%= user.dynamic_desc %></td>
-    <td><%= user.image_id %></td>
-    <td><%= link_to 'Show', user_path(user.user_id) %></td>
-    <td><%= link_to 'Edit', edit_user_path(user.user_id) %></td>
-    <td><%= link_to 'Destroy', user_path(user.user_id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+            <div class="span10">
 
+                <div class="pull-right">
+                    <%if user.user_id!=session[:user_id].user_id%>
+                    <%=form_tag(follows_path) do %>
+                    <%if user.is_following_by_current? && user.is_fans_of_current?%>
+                    <div> <i class="icon-user"></i> 
+                        <i class=" icon-arrow-left"></i>
+                         <i class=" icon-arrow-right"></i>
+                        <i class="icon-user"></i>
+                    </div>
+                    <%elsif user.is_following_by_current?%>
+                    <%=submit_tag "followed",:disabled=>
+                    true,:class=>"btn disabled"%>
+                    <%else%>
+                    <%=hidden_field :follow,:following_id,:value=>
+                    user.user_id%>
+                    <%=submit_tag "follow"%>
+                    <%end%>
+                    <%end%>
+                    <%end%></div>
+                <h4>
+                    <%=user.account%></h4>
+
+                <% if user.dynamic_desc!=nil%>
+                <p>
+                    <%=user.dynamic_desc%></p>
+                <%else%>
+                <p>please write your dynamic information</p>
+                <%end%>
+                <ul class="inline ul-user-list">
+                    <li  class="li-user-list-item">
+                        following&nbsp;
+                        <%=user.following_count%></li>
+
+                    <li class="li-user-list-item">
+                        fans&nbsp;
+                        <%=user.fans_count%></li>
+                    <li class="li-user-list-item">
+                        message &nbsp;
+                        <%=user.msg_count%></li>
+
+                </ul>
+            </div>
+            <div class="span12">
+                <hr></div>
+
+        </li>
+
+        <%end%>
+        <%end%></ul>
+</div>
