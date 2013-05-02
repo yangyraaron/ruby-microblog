@@ -41,20 +41,16 @@ class User < ActiveRecord::Base
     if(filter.present?)
       like_filter="%#{filter}%"
 
-      str_join = "LEFT JOIN follows ON follows.following_id=users.user_id AND follows.user_id=#{user_id} "
-      str_join << "LEFT JOIN fans ON fans.fans_id=users.user_id AND fans.user_id=#{user_id}"
+      search_with_relation(user_id,["users.account like ? or users.email like ?",like_filter,like_filter])
+     end
+  end
 
-      str_select="users.*,"
-      str_select << "CASE WHEN follows.user_id IS NULL THEN false ELSE true END is_following_by_current,"
-      str_select << "CASE WHEN fans.user_id IS NULL THEN false ELSE true END is_fans_of_current"
-      #self.where(["account like ? or email like ?",like_filter,like_filter])
-      self.find(:all,
-                :select=>str_select,
-                :joins=>str_join,
-                :conditions=>["users.account like ? or users.email like ?",like_filter,like_filter],
-                :order=>"users.account"
-                )
-    end
+  # @user_id is id of the user will be fetched  
+  # @current_user_id is id of the user to be caculated relation with returned user
+  def self.get_with_relation(user_id,current_user_id)
+    condition = ["users.user_id=?",user_id]
+
+    search_with_relation(current_user_id,condition).first
   end
 
   private
@@ -64,6 +60,22 @@ class User < ActiveRecord::Base
 
   def generate_salt
     self.salt=self.user_id.to_s+rand.to_s
+  end
+
+  def self.search_with_relation(user_id,condition)
+    str_join = "LEFT JOIN follows ON follows.following_id=users.user_id AND follows.user_id=#{user_id} "
+    str_join << "LEFT JOIN fans ON fans.fans_id=users.user_id AND fans.user_id=#{user_id}"
+
+    str_select="users.*,"
+    str_select << "CASE WHEN follows.user_id IS NULL THEN false ELSE true END is_following_by_current,"
+    str_select << "CASE WHEN fans.user_id IS NULL THEN false ELSE true END is_fans_of_current"
+    #self.where(["account like ? or email like ?",like_filter,like_filter])
+    self.find(:all,
+              :select=>str_select,
+              :joins=>str_join,
+              :conditions=>condition,
+              :order=>"users.account"
+              )
   end
 
 end

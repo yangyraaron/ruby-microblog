@@ -36,11 +36,12 @@ class FollowsController < ApplicationController
   # DELETE /follows/1
   # DELETE /follows/1.json
   def destroy
-    @follow = Follow.find(params[:id])
-    @follow.destroy
+    @follow = Follow.find_by_following_id(params[:id])
+    @follow.unfollow
 
     respond_to do |format|
-      format.html { redirect_to follows_url }
+      #reload the user's profile
+      format.html { redirect_to user_url(@follow.following_id) }
       format.json { head :no_content }
     end
   end

@@ -29,16 +29,16 @@
                     </div>
                     <%elsif user.is_following_by_current?%>
                     <%=submit_tag "followed",:disabled=>
-                    true,:class=>"btn disabled"%>
+                    true,:class=>"btn btn-primary disabled"%>
                     <%else%>
                     <%=hidden_field :follow,:following_id,:value=>
                     user.user_id%>
-                    <%=submit_tag "follow"%>
+                    <%=submit_tag "follow",:class=>"btn btn-primary"%>
                     <%end%>
                     <%end%>
                     <%end%></div>
                 <h4>
-                    <%=user.account%></h4>
+                    <%=link_to user.account,user_path(user.user_id)%></h4>
 
                 <% if user.dynamic_desc!=nil%>
                 <p>

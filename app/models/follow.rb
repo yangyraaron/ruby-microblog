@@ -22,4 +22,22 @@ class Follow < ActiveRecord::Base
     return true
   end
 
+  def unfollow
+    logger.info("unfollow : #{self.inspect}")
+    fan = Fan.where(:user_id=>self.following_id,:fans_id=>self.user_id)
+    logger.info "unfans : #{fan.inspect}"
+
+    begin
+      Follow.transaction do
+        self.destroy
+        fan.destroy
+      end
+    rescue Exception => e
+      logger.info("unfollow user with Exception : #{e.inspect}")
+      return false
+    end
+    return true
+
+  end
+
 end
