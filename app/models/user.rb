@@ -16,11 +16,6 @@ class User < ActiveRecord::Base
   attr_accessor :password_confirmation
   attr_reader  :password
 
-  def initialize
-    @is_following_by_current=false
-    @is_fans_of_curre=false
-  end
-
   def password=(password)
     @password=password
 

@@ -17,6 +17,26 @@
             </div>
 
             <div class="span10">
+
+                <div class="pull-right">
+                    <%if user.user_id!=session[:user_id].user_id%>
+                    <%=form_tag(follows_path) do %>
+                    <%if user.is_following_by_current? && user.is_fans_of_current?%>
+                    <div> <i class="icon-user"></i> 
+                        <i class=" icon-arrow-left"></i>
+                         <i class=" icon-arrow-right"></i>
+                        <i class="icon-user"></i>
+                    </div>
+                    <%elsif user.is_following_by_current?%>
+                    <%=submit_tag "followed",:disabled=>
+                    true,:class=>"btn disabled"%>
+                    <%else%>
+                    <%=hidden_field :follow,:following_id,:value=>
+                    user.user_id%>
+                    <%=submit_tag "follow"%>
+                    <%end%>
+                    <%end%>
+                    <%end%></div>
                 <h4>
                     <%=user.account%></h4>
 
@@ -26,10 +46,6 @@
                 <%else%>
                 <p>please write your dynamic information</p>
                 <%end%>
-
-                <%str_btn="follow"%>
-                <%str_btn="unfollow" if user.is_following_by_current%>
-                <%=submit_tag str_btn %> 
                 <ul class="inline ul-user-list">
                     <li  class="li-user-list-item">
                         following&nbsp;
@@ -45,8 +61,7 @@
                 </ul>
             </div>
             <div class="span12">
-                <hr>
-            </div>
+                <hr></div>
 
         </li>
 

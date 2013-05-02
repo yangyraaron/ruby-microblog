@@ -41,10 +41,14 @@ class FollowsController < ApplicationController
   # POST /follows.json
   def create
     @follow = Follow.new(params[:follow])
+    @follow.id = IdGenerator.generate_id
+    @follow.user_id=current_user.user_id
+
+    logger.info("follow the user #{@follow.inspect}")
 
     respond_to do |format|
-      if @follow.save
-        format.html { redirect_to @follow, notice: 'Follow was successfully created.' }
+      if @follow.follow
+        format.html { redirect_to user_url(@follow.following_id), notice: 'Follow was successfully created.' }
         format.json { render json: @follow, status: :created, location: @follow }
       else
         format.html { render action: "new" }
