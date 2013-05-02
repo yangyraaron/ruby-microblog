@@ -10,32 +10,6 @@ class FansController < ApplicationController
     end
   end
 
-  # GET /fans/1
-  # GET /fans/1.json
-  def show
-    @fan = Fan.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @fan }
-    end
-  end
-
-  # GET /fans/new
-  # GET /fans/new.json
-  def new
-    @fan = Fan.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @fan }
-    end
-  end
-
-  # GET /fans/1/edit
-  def edit
-    @fan = Fan.find(params[:id])
-  end
 
   # POST /fans
   # POST /fans.json
@@ -53,21 +27,6 @@ class FansController < ApplicationController
     end
   end
 
-  # PUT /fans/1
-  # PUT /fans/1.json
-  def update
-    @fan = Fan.find(params[:id])
-
-    respond_to do |format|
-      if @fan.update_attributes(params[:fan])
-        format.html { redirect_to @fan, notice: 'Fan was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @fan.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # DELETE /fans/1
   # DELETE /fans/1.json
