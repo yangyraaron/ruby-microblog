@@ -1,50 +1,81 @@
-<%= form_for @user,:html=>
-{:class=>".form-horizontal"} do |f| %>
-<% if @user.errors.any? %>
-<div id="error_explanation">
-  <h2>
-    <%= pluralize(@user.errors.count, "error") %>prohibited this user from being saved:</h2>
-  <ul>
-    <% @user.errors.full_messages.each do |msg| %>
-    <li>
-      <%= msg %></li>
-    <% end %></ul>
-</div>
-<% end %>
+<div class="span8 offset2">
 
-<div class="control-group">
-  <%= f.label(:account,:class=>
-  "control-label h-align right span4") %>
-  <%= f.text_field :account,:placeholder=>"Account" %></div>
+  <%= form_for @user,:html=>
+  {:class=>".form-horizontal"} do |f| %>
+  <% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= pluralize(@user.errors.count, "error") %>prohibited this user from being saved:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+      <li>
+        <%= msg %></li>
+      <% end %></ul>
+  </div>
+  <% end %>
 
-<% if !@user.account || @user.account.empty? %>
+  <div class="control-group">
+    <dl class="dl-horizontal">
+      <dt>
+        <%= f.label(:account,:class=>"h-align") %></dt>
+      <dd>
+        <%= f.text_field :account,:placeholder=>"Account" %></dd>
+    </dl>
 
-<div id="password_group" class="control-group">
-  <%= f.label(:password,:class=>
-  "control-label h-align right span4") %>
-  <%= f.password_field :password,:placeholder=>"Password" %></div>
+  </div>
 
-<div id="confirm_group" class="control-group">
-  <%= f.label(:password_confirmation,:class=>
-  "control-label h-align right span4") %>
-  <%= f.password_field :password_confirmation,:placeholder=>"Confirm Password" %>
-</div>
-<%end%>
+  <% if !@user.account || @user.account.empty? %>
 
-<div class="control-group">
-  <%= f.label :email,:class=>
-  "control-label h-align right span4" %>
-  <%= f.text_field :email,:placeholder=>"Email" %></div>
+  <div id="password_group" class="control-group">
+    <dl class="dl-horizontal">
+      <dt>
+        <%= f.label(:password,:class=>"h-align") %></dt>
+      <dd>
+        <%= f.password_field :password,:placeholder=>"Password" %></dd>
+    </dl>
 
-<div class="control-group">
-  <%= f.label :dynamic_desc,:class=>
-  "control-label h-align right span4" %>
-  <%= f.text_field :dynamic_desc,:placeholder=>"Dynamic desc" %></div>
+  </div>
 
-<div class="span8 pull-right">
-  <%= f.submit %></div>
-<% end %>
+  <div id="confirm_group" class="control-group">
+    <dl class="dl-horizontal">
+      <dt>
+        <%= f.label(:password_confirmation,:class=>"h-align") %></dt>
+      <dd>
+        <%= f.password_field :password_confirmation,:placeholder=>"Confirm Password" %></dd>
+    </dl>
 
+  </div>
+  <%end%>
+
+  <div class="control-group">
+    <dl class="dl-horizontal">
+      <dt>
+        <%= f.label :email,:class=>"h-align" %></dt>
+      <dd>
+        <%= f.text_field :email,:placeholder=>"Email" %></dd>
+    </dl>
+
+  </div>
+
+  <div class="control-group">
+    <dl class="dl-horizontal">
+      <dt>
+        <%= f.label :dynamic_desc,:class=>"h-align" %></dt>
+      <dd>
+        <%= f.text_field :dynamic_desc,:placeholder=>"Dynamic desc" %></dd>
+    </dl>
+
+  </div>
+
+  <div class="control-group">
+    <dl class="dl-horizontal">
+      <dd>
+        <%= f.submit :class=>"btn btn-primary" %></dd>
+    </dl>
+  </div>
+  <% end %></div>
+
+<% content_for :scripts do%>
 <script type="text/javascript">
 $(document).ready(function() {
   $("input[type='submit']").click(function(e) {
@@ -88,3 +119,4 @@ $(document).ready(function() {
 });
 
 </script>
+<%end%>

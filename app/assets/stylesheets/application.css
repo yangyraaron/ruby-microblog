@@ -17,7 +17,6 @@
  }
 
  .h-align{
- 	margin-right: 10px;
  	text-align:left;
  	line-height: 30px;	
  	display: inline-block;
@@ -32,9 +31,10 @@
  .content {
  	margin-top: 60px;
  }
- .ul-user-bar{
- 	margin-left: 5px;
+ .user-bar-font{
+ 	font-size: 10px;
  }
+
  .ul-user-list{
  	margin-left: 0px
  }
@@ -47,4 +47,41 @@
 
  li{
  	list-style-type: none;
+ }
+
+ .div-signin-layout {
+	  box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  background-image: -moz-linear-gradient(top,  rgba(232, 232, 232, 1) 0%, rgba(117, 96, 164, 1) 100%);
+	  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(232, 232, 232, 1)), color-stop(100%,rgba(117, 96, 164, 1)));
+	  background-image: -webkit-linear-gradient(top,  rgba(232, 232, 232, 1) 0%,rgba(117, 96, 164, 1) 100%);
+	  background-image: -o-linear-gradient(top,  rgba(232, 232, 232, 1) 0%,rgba(117, 96, 164, 1) 100%);
+	  background-image: -ms-linear-gradient(top,  rgba(232, 232, 232, 1) 0%,rgba(117, 96, 164, 1) 100%);
+	  background-image: linear-gradient(to bottom,  rgba(232, 232, 232, 1) 0%,rgba(117, 96, 164, 1) 100%);
+	  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E8E8E8', endColorstr='#7560A4',GradientType=0 );
+	  background-size: cover;
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -ms-background-size: cover;
+	  -o-background-size: cover;
+	  opacity: 1;
+	  border: 0px solid #F0F0F0;
+	  border-radius: 8px;
+	  -webkit-border-radius: 8px;
+	  -moz-border-radius: 8px;
+	  -ms-border-radius: 8px;
+	  -o-border-radius: 8px;
+	  box-shadow: 1px 0px 10px 0px #8767E4,0px 0px 12px 0px #8767E4 inset;
+	  -webkit-box-shadow: 1px 0px 10px 0px #8767E4,0px 0px 12px 0px #8767E4 inset;
+	  -moz-box-shadow: 1px 0px 10px 0px #8767E4,0px 0px 12px 0px #8767E4 inset;
+	  -ms-box-shadow: 1px 0px 10px 0px #8767E4,0px 0px 12px 0px #8767E4 inset;
+	  -o-box-shadow: 1px 0px 10px 0px #8767E4,0px 0px 12px 0px #8767E4 inset;
+}
+
+ .div-signin-input{
+ 	margin-right: 20px;
+ }
+
+ .div-signin-content{
+ 	margin-left: 20px;
  }

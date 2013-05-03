@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_filter :authorize,:only=>[:new,:create,:show]
+  layout "content",:except=>[:new,:create]
   # GET /users
   # GET /users.json
   def index
@@ -89,4 +90,6 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 end

@@ -24,7 +24,7 @@ class Follow < ActiveRecord::Base
 
   def unfollow
     logger.info("unfollow : #{self.inspect}")
-    fan = Fan.where(:user_id=>self.following_id,:fans_id=>self.user_id)
+    fan = Fan.where(:user_id=>self.following_id,:fans_id=>self.user_id).first
     logger.info "unfans : #{fan.inspect}"
 
     begin

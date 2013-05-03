@@ -3,9 +3,8 @@
 <head>
 	<title>Microblog</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<%= stylesheet_link_tag   "application", :media =>
+	<%= stylesheet_link_tag   "application","bootstrap-responsive","bootstrap", :media =>
 	"all" %>
-	<%= javascript_include_tag "application" %>
 	<%= csrf_meta_tags %></head>
 <body>
 	<div id="header" class="navbar navbar-inverse navbar-fixed-top">
@@ -49,40 +48,12 @@
 	</div>
 	<div id="content" class="container-fluid content">
 		<div class="row-fluid">
-			<div class="span2">
-				<ul class="nav nav-list">
-					<li class="nav-header">Microblog</li>
-					<li>
-						<a href="#">Home</a>
-					</li>
-					<li>
-						<a href="#">@me</a>
-					</li>
-					<li>
-						<a href="#">comments</a>
-					</li>
-					<li class="nav-header">group</li>
-					<li>
-						<a href="#">classmates</a>
-					</li>
-					<li>
-						<a href="#">family</a>
-					</li>
-				</ul>
-			</div>
-			<div class="span8">
-				<%= yield %></div>
-			<div class="span2">
-				<ul class="thumbnails">
-					<li >
-						<a href="#" class="thumbnail">
-							<%=image_tag( "gravatar-user-420.png",:size=>"60X60") %></a>
-					</li>
-				</ul>
-			</div>
+			<%=content_for?(:content)? yield(:content) : yield%>
 		</div>
 	</div>
 	<div id="footer"></div>
+	<%= javascript_include_tag "application","bootstrap"%>
+	<%=yield :scripts%>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var userFilter = $('#user_filter');
