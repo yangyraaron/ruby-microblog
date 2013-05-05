@@ -1,31 +1,7 @@
-<div class="user-bar <%=layout_class%>">
- <li >
-      <a href="#" class="thumbnail">
-        <%=image_tag( "gravatar-user-420.png",:size=>"60X60") %></a>
-    </li>
-  <ul class="inline user-bar-info center">
-    <li class="user-bar-info-cell">
-      <ul class="span1">
-        <li><%=link_to "following",follows_url%></li>
-        <li class="user-bar-info-number">
-          <%=user.following_count%></li>
-      </ul>
-    </li>
-    <li class="user-bar-info-cell">
-      <ul class="span1">
-        <li><%=link_to "fans",fans_url%></li>
-        <li class="user-bar-info-number">
-          <%=user.fans_count%></li>
-
-      </ul>
-    </li>
-    <li class="user-bar-info-cell">
-      <ul class="span1">
-        <li>message</li>
-        <li class="user-bar-info-number">
-          <%=user.msg_count%></li>
-      </ul>
-    </li>
-
-  </ul>
-</div>
+<div class="user-bar <%=layout_class%>
+  ">
+  <li >
+    <a href="#" class="thumbnail">
+      <%=image_tag( "gravatar-user-420.png",:size=>"60X60") %></a>
+  </li>
+  <%=render "shared/user_audit",:user=>user,:align=>"center"%></div>

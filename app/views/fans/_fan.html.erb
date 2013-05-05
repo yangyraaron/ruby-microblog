@@ -1,0 +1,27 @@
+<li>
+	<div class="span2">
+		<ul class="thumbnails">
+			<li >
+				<a href="#" class="thumbnail">
+					<%=image_tag("gravatar-user-420.png",:size=>"60X60") %></a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="span10">
+
+		<h4>
+			<%=link_to user.account,user_path(user.user_id)%></h4>
+
+		<% if user.dynamic_desc!=nil%>
+		<p>
+			<%=user.dynamic_desc%></p>
+		<%else%>
+		<p>please write your dynamic information</p>
+		<%end%>
+		 <%=render "shared/user_audit",:user=>user,:align=>"left"%>
+	</div>
+	<div class="span12">
+		<hr></div>
+
+</li>

@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
   validates :email,:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/, :on => :create }
   validate :password_must_be_present
 
-  attr_accessible :account, :dynamic_desc, :email, :image_id, :user_id,:password_confirmation,:password,:is_following_by_current,:is_fans_of_current
+  attr_accessible :account, :dynamic_desc, :email, :image_id, :user_id,:msg_count,:following_count,:fans_count,
+    :password_confirmation,:password,:is_following_by_current,:is_fans_of_current
   attr_accessor :password_confirmation
   attr_reader  :password
 
@@ -42,15 +43,29 @@ class User < ActiveRecord::Base
       like_filter="%#{filter}%"
 
       search_with_relation(user_id,["users.account like ? or users.email like ?",like_filter,like_filter])
-     end
+    end
   end
 
-  # @user_id is id of the user will be fetched  
+  # @user_id is id of the user will be fetched
   # @current_user_id is id of the user to be caculated relation with returned user
   def self.get_with_relation(user_id,current_user_id)
     condition = ["users.user_id=?",user_id]
 
     search_with_relation(current_user_id,condition).first
+  end
+
+  def self.get_following(user_id)
+    self.find(:all,
+              :joins=>"INNER JOIN follows f ON users.user_id=f.following_id",
+              :conditions=>["f.user_id=?",user_id],
+              :order=>"users.account")
+  end
+
+  def self.get_fans(user_id)
+    self.find(:all,
+              :joins=>"INNER JOIN fans fs ON users.user_id=fs.fans_id",
+              :conditions=>["fs.user_id=?",user_id],
+              :order=>"users.account")
   end
 
   private

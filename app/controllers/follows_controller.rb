@@ -1,8 +1,13 @@
 class FollowsController < ApplicationController
+  layout "content"
+
   # GET /follows
   # GET /follows.json
   def index
-    @follows = Follow.all
+    user_id = params[:user_id]
+    user_id = current_user.user_id unless user_id.present?
+      
+    @follows = User.get_following(current_user.user_id)
     
     respond_to do |format|
       format.html # index.html.erb
@@ -23,10 +28,13 @@ class FollowsController < ApplicationController
 
     respond_to do |format|
       if @follow.follow
+        #reload the current user
+        current_user.reload
+
         format.html { redirect_to user_url(@follow.following_id), notice: 'Follow was successfully created.' }
         format.json { render json: @follow, status: :created, location: @follow }
       else
-        format.html { render action: "new" }
+        format.html { render action: "index" }
         format.json { render json: @follow.errors, status: :unprocessable_entity }
       end
     end
@@ -38,6 +46,8 @@ class FollowsController < ApplicationController
   def destroy
     @follow = Follow.find_by_following_id(params[:id])
     @follow.unfollow
+
+    current_user.reload
 
     respond_to do |format|
       #reload the user's profile
