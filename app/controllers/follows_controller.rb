@@ -3,7 +3,7 @@ class FollowsController < ApplicationController
   # GET /follows.json
   def index
     @follows = Follow.all
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @follows }

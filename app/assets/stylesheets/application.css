@@ -31,8 +31,21 @@
  .content {
  	margin-top: 60px;
  }
- .user-bar-font{
- 	font-size: 10px;
+ .user-bar{
+
+ }
+ .user-bar-info{
+ 	margin-top: 10px;
+ }
+ .user-bar-info .user-bar-info-cell{
+ 	padding-left: 1px;
+ 	padding-right: 1px;
+ }
+ .user-bar-info-number{
+ 	font-weight: bolder;
+ }
+.user-bar-font{
+ 	font-size: 12px;
  }
 
  .ul-user-list{
@@ -48,35 +61,6 @@
  li{
  	list-style-type: none;
  }
-
- .div-signin-layout {
-	  box-sizing: border-box;
-	  -moz-box-sizing: border-box;
-	  background-image: -moz-linear-gradient(top,  rgba(232, 232, 232, 1) 0%, rgba(117, 96, 164, 1) 100%);
-	  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(232, 232, 232, 1)), color-stop(100%,rgba(117, 96, 164, 1)));
-	  background-image: -webkit-linear-gradient(top,  rgba(232, 232, 232, 1) 0%,rgba(117, 96, 164, 1) 100%);
-	  background-image: -o-linear-gradient(top,  rgba(232, 232, 232, 1) 0%,rgba(117, 96, 164, 1) 100%);
-	  background-image: -ms-linear-gradient(top,  rgba(232, 232, 232, 1) 0%,rgba(117, 96, 164, 1) 100%);
-	  background-image: linear-gradient(to bottom,  rgba(232, 232, 232, 1) 0%,rgba(117, 96, 164, 1) 100%);
-	  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E8E8E8', endColorstr='#7560A4',GradientType=0 );
-	  background-size: cover;
-	  -webkit-background-size: cover;
-	  -moz-background-size: cover;
-	  -ms-background-size: cover;
-	  -o-background-size: cover;
-	  opacity: 1;
-	  border: 0px solid #F0F0F0;
-	  border-radius: 8px;
-	  -webkit-border-radius: 8px;
-	  -moz-border-radius: 8px;
-	  -ms-border-radius: 8px;
-	  -o-border-radius: 8px;
-	  box-shadow: 1px 0px 10px 0px #8767E4,0px 0px 12px 0px #8767E4 inset;
-	  -webkit-box-shadow: 1px 0px 10px 0px #8767E4,0px 0px 12px 0px #8767E4 inset;
-	  -moz-box-shadow: 1px 0px 10px 0px #8767E4,0px 0px 12px 0px #8767E4 inset;
-	  -ms-box-shadow: 1px 0px 10px 0px #8767E4,0px 0px 12px 0px #8767E4 inset;
-	  -o-box-shadow: 1px 0px 10px 0px #8767E4,0px 0px 12px 0px #8767E4 inset;
-}
 
  .div-signin-input{
  	margin-right: 20px;
