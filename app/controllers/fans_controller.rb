@@ -1,10 +1,13 @@
 class FansController < ApplicationController
   layout "content"
 
-  # GET /fans
+  # GET /fans?user_id=?
   # GET /fans.json
   def index
-    @fans = User.get_fans(current_user.user_id)
+    user_id = params[:user_id]
+    user_id=current_user.user_id unless user_id.present?
+
+    @fans = User.get_fans(user_id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,7 +25,7 @@ class FansController < ApplicationController
       if @fan.save
         #update fans count of current user
         current_user.fans_count+=1
-        
+
         format.html { redirect_to @fan, notice: 'Fan was successfully created.' }
         format.json { render json: @fan, status: :created, location: @fan }
       else

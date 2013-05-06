@@ -38,19 +38,7 @@
 		<%else%>
 		<p>please write your dynamic information</p>
 		<%end%>
-		<ul class="inline ul-user-list">
-			<li  class="li-user-list-item">
-				following&nbsp;
-				<%=user.following_count%></li>
-
-			<li class="li-user-list-item">
-				fans&nbsp;
-				<%=user.fans_count%></li>
-			<li class="li-user-list-item">
-				message &nbsp;
-				<%=user.msg_count%></li>
-
-		</ul>
+		 <%=render "shared/user_audit",:user=>user,:align=>"left"%>
 	</div>
 	<div class="span12">
 		<hr></div>

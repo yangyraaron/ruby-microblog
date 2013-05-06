@@ -1,13 +1,13 @@
 class FollowsController < ApplicationController
   layout "content"
 
-  # GET /follows
+  # GET /follows?user_id
   # GET /follows.json
   def index
     user_id = params[:user_id]
     user_id = current_user.user_id unless user_id.present?
       
-    @follows = User.get_following(current_user.user_id)
+    @follows = User.get_following(user_id)
     
     respond_to do |format|
       format.html # index.html.erb
