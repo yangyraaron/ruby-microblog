@@ -1,0 +1,46 @@
+<li>
+	<div class="span2">
+		<ul class="thumbnails">
+			<li >
+				<a href="#" class="thumbnail">
+					<%=image_tag("gravatar-user-420.png",:size=>"60X60") %></a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="span10">
+
+		<div class="pull-right">
+			<%if user.user_id!=session[:user_id].user_id%>
+			<%=form_tag(follows_path) do %>
+			<%if user.is_following_by_current? && user.is_fans_of_current?%>
+			<div> <i class="icon-user"></i> <i class="icon-arrow-left"></i>
+				<i class="icon-arrow-right"></i>
+				<i class="icon-user"></i>
+			</div>
+			<%elsif user.is_following_by_current?%>
+			<%=submit_tag "followed",:disabled=>
+			true,:class=>"btn btn-primary disabled"%>
+			<%else%>
+			<%=hidden_field :follow,:following_id,:value=>
+			user.user_id%>
+			<%=submit_tag "follow",:class=>
+			"btn btn-primary"%>
+			<%end%>
+			<%end%>
+			<%end%></div>
+		<h4>
+			<%=link_to user.account,user_path(user.user_id)%></h4>
+
+		<% if user.dynamic_desc!=nil%>
+		<p>
+			<%=user.dynamic_desc%></p>
+		<%else%>
+		<p>please write your dynamic information</p>
+		<%end%>
+		 <%=render "shared/user_audit",:user=>user,:align=>"left"%>
+	</div>
+	<div class="span12">
+		<hr></div>
+
+</li>

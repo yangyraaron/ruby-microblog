@@ -1,26 +1,38 @@
-<div>
+<div >
 	<% if flash[:alert] %>
-		<p id="notice"><%= flash[:alert]%></p>
+	<p id="notice">
+		<%= flash[:alert]%></p>
 	<% end %>
 
-	<%= form_tag do %>
-		<fieldset>
-			<legend>Sign In</legend>
-
-			<div class="control-group">
-				<label for="account" class="control-label h-align right span4">Account</label>
-				<%=text_field_tag :account,nil,:placeholder=>"Account"%>
+	<fieldset>
+		<legend>Sign In</legend>
+		<div >
+			<div class="span5 div-signin-content">
 			</div>
+			<div class="span3 div-signin-input">
+				<%= form_tag do %>
+				<div class="control-group">
+					<dl class="dl-horizontal">
+						<dt>
+							<label for="account" class="h-align">Account</label>
+						</dt>
+						<dd>
+							<%=text_field_tag :account,nil,:placeholder=>"Account"%></dd>
+					</dl>
+					<dl class="dl-horizontal">
+						<dt>
+							<label for="password" class="h-align">Password</label>
+						</dt>
+						<dd>
+							<%=password_field_tag :password,nil,:placeholder=>"Password"%></dd>
+					</dl>
+					<dl class="dl-horizontal">
+						<dd>
+							<%=submit_tag "Sign In",:class=>"btn btn-primary"%></dd>
+					</dl>
+				</div>
+				<%end%></div>
+		</div>
 
-			<div>
-				<label for="password" class="control-label h-align right span4">Password</label>
-				<%=password_field_tag :password,nil,:placeholder=>"Password"%>
-			</div>
-
-			<div class="span8 pull-right">
-				<%=submit_tag "Sign In"%>
-			</div>
-
-		</fieldset>
-	<%end%>
+	</fieldset>
 </div>

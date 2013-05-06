@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_filter :authorize,:only=>[:new,:create,:show]
+  layout "content",:except=>[:new,:create]
   # GET /users
   # GET /users.json
   def index
@@ -15,7 +16,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
+    @user = User.get_with_relation(params[:id],current_user.user_id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -89,4 +90,6 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 end

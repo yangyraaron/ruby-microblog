@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
   validates :email,:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/, :on => :create }
   validate :password_must_be_present
 
-  attr_accessible :account, :dynamic_desc, :email, :image_id, :user_id,:password_confirmation,:password,:is_following_by_current,:is_fans_of_current
+  attr_accessible :account, :dynamic_desc, :email, :image_id, :user_id,:msg_count,:following_count,:fans_count,
+    :password_confirmation,:password,:is_following_by_current,:is_fans_of_current
   attr_accessor :password_confirmation
   attr_reader  :password
 
@@ -41,20 +42,30 @@ class User < ActiveRecord::Base
     if(filter.present?)
       like_filter="%#{filter}%"
 
-      str_join = "LEFT JOIN follows ON follows.following_id=users.user_id AND follows.user_id=#{user_id} "
-      str_join << "LEFT JOIN fans ON fans.fans_id=users.user_id AND fans.user_id=#{user_id}"
-
-      str_select="users.*,"
-      str_select << "CASE WHEN follows.user_id IS NULL THEN false ELSE true END is_following_by_current,"
-      str_select << "CASE WHEN fans.user_id IS NULL THEN false ELSE true END is_fans_of_current"
-      #self.where(["account like ? or email like ?",like_filter,like_filter])
-      self.find(:all,
-                :select=>str_select,
-                :joins=>str_join,
-                :conditions=>["users.account like ? or users.email like ?",like_filter,like_filter],
-                :order=>"users.account"
-                )
+      search_with_relation(user_id,["users.account like ? or users.email like ?",like_filter,like_filter])
     end
+  end
+
+  # @user_id is id of the user will be fetched
+  # @current_user_id is id of the user to be caculated relation with returned user
+  def self.get_with_relation(user_id,current_user_id)
+    condition = ["users.user_id=?",user_id]
+
+    search_with_relation(current_user_id,condition).first
+  end
+
+  def self.get_following(user_id)
+    self.find(:all,
+              :joins=>"INNER JOIN follows f ON users.user_id=f.following_id",
+              :conditions=>["f.user_id=?",user_id],
+              :order=>"users.account")
+  end
+
+  def self.get_fans(user_id)
+    self.find(:all,
+              :joins=>"INNER JOIN fans fs ON users.user_id=fs.fans_id",
+              :conditions=>["fs.user_id=?",user_id],
+              :order=>"users.account")
   end
 
   private
@@ -64,6 +75,22 @@ class User < ActiveRecord::Base
 
   def generate_salt
     self.salt=self.user_id.to_s+rand.to_s
+  end
+
+  def self.search_with_relation(user_id,condition)
+    str_join = "LEFT JOIN follows ON follows.following_id=users.user_id AND follows.user_id=#{user_id} "
+    str_join << "LEFT JOIN fans ON fans.fans_id=users.user_id AND fans.user_id=#{user_id}"
+
+    str_select="users.*,"
+    str_select << "CASE WHEN follows.user_id IS NULL THEN false ELSE true END is_following_by_current,"
+    str_select << "CASE WHEN fans.user_id IS NULL THEN false ELSE true END is_fans_of_current"
+    #self.where(["account like ? or email like ?",like_filter,like_filter])
+    self.find(:all,
+              :select=>str_select,
+              :joins=>str_join,
+              :conditions=>condition,
+              :order=>"users.account"
+              )
   end
 
 end

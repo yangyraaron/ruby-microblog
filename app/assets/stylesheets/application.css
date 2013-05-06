@@ -17,7 +17,6 @@
  }
 
  .h-align{
- 	margin-right: 10px;
  	text-align:left;
  	line-height: 30px;	
  	display: inline-block;
@@ -32,19 +31,31 @@
  .content {
  	margin-top: 60px;
  }
- .ul-user-bar{
- 	margin-left: 5px;
- }
- .ul-user-list{
- 	margin-left: 0px
- }
-  .ul-user-list .li-user-list-item{
- 	margin: 0px;
- 	padding-left: 0px;
- 	padding-right: 0px;
- }
+ .user-bar{
 
-
+ }
+ .user-bar-info{
+ 	margin-top: 10px;
+ }
+ .user-bar-info .user-bar-info-cell{
+ 	padding-left: 1px;
+ 	padding-right: 1px;
+ }
+ .user-bar-info-number{
+ 	font-weight: bolder;
+ }
+.user-bar-font{
+ 	font-size: 12px;
+ }
+ 
  li{
  	list-style-type: none;
+ }
+
+ .div-signin-input{
+ 	margin-right: 20px;
+ }
+
+ .div-signin-content{
+ 	margin-left: 20px;
  }

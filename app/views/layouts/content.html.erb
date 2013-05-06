@@ -1,0 +1,33 @@
+
+
+<%=content_for :content do %>
+<div class="span2">
+	<ul class="nav nav-list">
+		<li class="nav-header">Microblog</li>
+		<li>
+			<a href="#">Home</a>
+		</li>
+		<li>
+			<a href="#">@me</a>
+		</li>
+		<li>
+			<a href="#">comments</a>
+		</li>
+		<li class="nav-header">group</li>
+		<li>
+			<a href="#">classmates</a>
+		</li>
+		<li>
+			<a href="#">family</a>
+		</li>
+	</ul>
+</div>
+<div class="span8">
+	<%=yield %></div>
+<div class="span2">
+	<%=render 'users/user_bar',:user=>session[:user_id],:layout_class=>"span12 user-bar-font"%>
+</div>
+<%end%>
+
+<%=render :template=>"layouts/application"%>
+
