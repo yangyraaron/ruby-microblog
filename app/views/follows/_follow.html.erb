@@ -11,7 +11,7 @@
 	<div class="span10">
 
 		<div class="pull-right">
-			<%=form_tag(follows_path,:method=>
+			<%=form_tag(follow_path(user.user_id),:method=>
 			:delete) do %>
 			<%=submit_tag "unfollow",:class=>
 			"btn btn-primary"%>

@@ -1,21 +1,6 @@
 Microblog::Application.routes.draw do
 
-
   resources :groups
-
-
-  resources :fans
-
-
-  resources :follows
-
-
-  # get "sessions/new"
-
-  # post "sessions/create"
-
-  # get "sessions/destroy"
-
   resources :users
 
   controller :sessions do
@@ -23,6 +8,16 @@ Microblog::Application.routes.draw do
     post 'signin'=>:create
     get 'home'=>:index
     delete "signout"=>:destroy
+  end
+
+  controller :fans do
+    get 'fans'=>:index
+  end
+
+  controller :follows do
+    get 'follows'=>:index
+    post 'follows'=>:create
+    delete "follows/:id"=>:destroy, :as=>"follow"
   end
 
   get 'groups/:group_id/follows' =>'groups#follows',:as=>"group_follows"

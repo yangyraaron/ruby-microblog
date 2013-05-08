@@ -54,7 +54,8 @@ module Microblog
     config.active_record.whitelist_attributes = true
 
     # add the font folder into the assert paths
-    config.assets.paths << Rails.root.join("app","asserts","font");
+    config.assets.paths << Rails.root.join("vendor","assets","fonts")
+
     # Enable the asset pipeline
     config.assets.enabled = true
 

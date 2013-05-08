@@ -13,3 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+//= require bootmetro-charms.js
+//= require bootmetro.js
+//= require bootstrap.js

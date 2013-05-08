@@ -1,23 +1,22 @@
 <div id="follow_list" class="listview-container grid-layout">
-	<% if @users!=nil%>
-	<% @users.each do %>
+  <% if @users!=nil%>
+  <% @users.each do %>
 
-	<div class="mediumListIconTextItem">
-		<%=image_tag("gravatar-user-420.png",:size=>
-		"60X60",:class=>"mediumListIconTextItem-Image")%>
-		<div class="mediumListIconTextItem-Detail">
-			<h4>user.account</h4>
-			<h6>user.email</h6>
-		</div>
-	</div>
+  <div class="mediumListIconTextItem">
+    <%=image_tag("gravatar-user-420.png",:size=>
+    "60X60",:class=>"mediumListIconTextItem-Image")%>
+    <div class="mediumListIconTextItem-Detail">
+      <h4>user.account</h4>
+      <h6>user.email</h6>
+    </div>
+  </div>
 
-	<%end%>
-	<%end%>
-</div>
+  <%end%>
+  <%end%></div>
 
 <%content_for :scripts do %>
 <script type="text/javascript">
-	$('#follow_list').on('click', '.mediumListIconTextItem', function(e){
+  $('#follow_list').on('click', '.mediumListIconTextItem', function(e){
       e.preventDefault();
       $(this).toggleClass('selected');
    });

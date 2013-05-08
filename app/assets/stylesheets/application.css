@@ -10,52 +10,12 @@
  *
  *= require_self
  *= require_tree .
+ *= require	bootmetro-charms
+ *= require	bootmetro-tiles
+ *= require	bootmetro
+ *= require	bootstrap-responsive
+ *= require	bootstrap
+ *= require	datepicker
+ *= require	icomoon
+ *= require	metro-ui-light
  */
-
- .center{
- 	text-align: center;
- }
-
- .h-align{
- 	text-align:left;
- 	line-height: 30px;	
- 	display: inline-block;
- }
-  .right{
- 	text-align: right;
- }
-
- .inline-block{
- 	display: inline-block;
- }
- .content {
- 	margin-top: 60px;
- }
- .user-bar{
-
- }
- .user-bar-info{
- 	margin-top: 10px;
- }
- .user-bar-info .user-bar-info-cell{
- 	padding-left: 1px;
- 	padding-right: 1px;
- }
- .user-bar-info-number{
- 	font-weight: bolder;
- }
-.user-bar-font{
- 	font-size: 12px;
- }
- 
- li{
- 	list-style-type: none;
- }
-
- .div-signin-input{
- 	margin-right: 20px;
- }
-
- .div-signin-content{
- 	margin-left: 20px;
- }
