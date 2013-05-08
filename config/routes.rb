@@ -1,4 +1,6 @@
 Microblog::Application.routes.draw do
+
+
   resources :groups
 
 
@@ -22,6 +24,9 @@ Microblog::Application.routes.draw do
     get 'home'=>:index
     delete "signout"=>:destroy
   end
+
+  get 'groups/:group_id/follows' =>'groups#follows',:as=>"group_follows"
+  match 'groups/:group_id/follows/:follow_id/create'=>'groups#add_follow_to_group',:var=>:post,:as=>"add_group_follow"
 
 
   # The priority is based upon order of creation:

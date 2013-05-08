@@ -5,6 +5,7 @@ class GroupsController < ApplicationController
   # GET /groups.json
   def index
     @groups = Group.all
+    logger.info("groups : #{@groups.inspect}")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,10 +47,10 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        format.html { redirect_to groups_url, notice: 'Group was successfully created.' }
         format.json { render json: @group, status: :created, location: @group }
       else
-        format.html { render action: "new" }
+        format.html { render action: "index" }
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
@@ -80,6 +81,25 @@ class GroupsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to groups_url }
       format.json { head :no_content }
+    end
+  end
+
+  def follows
+    @groups = Group.all
+    @group = Group.find_by_id(params[:group_id])
+    @users = @group.users
+
+    respond_to do |format|
+      format.html {render action:"index"}
+      format.json { render json: @users }
+    end
+  end
+
+  def add_user_to_group
+
+     respond_to do |format|
+      format.html{redirect_to @group}
+      format.json { render json: @users }
     end
   end
 end

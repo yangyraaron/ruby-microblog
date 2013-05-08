@@ -53,6 +53,8 @@ module Microblog
     # parameters by using an attr_accessible or attr_protected declaration.
     config.active_record.whitelist_attributes = true
 
+    # add the font folder into the assert paths
+    config.assets.paths << Rails.root.join("app","asserts","font");
     # Enable the asset pipeline
     config.assets.enabled = true
 
@@ -60,5 +62,6 @@ module Microblog
     config.assets.version = '1.0'
 
     config.log_level=:info
+
   end
 end

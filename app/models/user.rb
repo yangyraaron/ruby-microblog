@@ -3,7 +3,7 @@ require 'digest/sha2'
 class User < ActiveRecord::Base
   self.primary_key=:user_id
 
-  belongs_to :group
+  has_and_belongs_to_many :group
 
   validates :account,:email,:password,:presence=>true
   validates :account,:email,:uniqueness=>true
