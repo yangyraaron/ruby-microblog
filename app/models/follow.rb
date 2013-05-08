@@ -4,8 +4,6 @@ class Follow < ActiveRecord::Base
 
   attr_accessible :id, :following_id, :user_id
 
-  belongs_to :user
-
   def follow
     logger.info("follow user : #{self.inspect}")
     fan = Fan.new(:id=>IdGenerator.generate_id,:user_id=>self.following_id,:fans_id=>self.user_id)

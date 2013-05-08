@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130430123922) do
+ActiveRecord::Schema.define(:version => 20130506131722) do
 
   create_table "fans", :id => false, :force => true do |t|
     t.integer  "id",         :limit => 8, :null => false
@@ -35,6 +35,22 @@ ActiveRecord::Schema.define(:version => 20130430123922) do
   add_index "follows", ["following_id"], :name => "index_follows_on_following_id"
   add_index "follows", ["user_id"], :name => "index_follows_on_user_id"
 
+  create_table "groups", :id => false, :force => true do |t|
+    t.integer  "id",          :limit => 8, :null => false
+    t.string   "name",                     :null => false
+    t.string   "description"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  create_table "groups_users", :id => false, :force => true do |t|
+    t.integer "group_id", :limit => 8, :null => false
+    t.integer "user_id",  :limit => 8, :null => false
+  end
+
+  add_index "groups_users", ["group_id"], :name => "index_groups_users_on_group_id"
+  add_index "groups_users", ["user_id"], :name => "index_groups_users_on_user_id"
+
   create_table "users", :id => false, :force => true do |t|
     t.integer  "user_id",         :limit => 8, :null => false
     t.string   "account",                      :null => false
@@ -48,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20130430123922) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.string   "salt"
+    t.string   "password"
   end
 
   add_index "users", ["account"], :name => "index_users_on_account", :unique => true

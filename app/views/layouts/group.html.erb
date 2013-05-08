@@ -1,0 +1,16 @@
+<%=content_for :content do %>
+<div class="span2">
+	<ul class="nav nav-list">
+		<li class="nav-header">following</li>
+		<li>
+			<a href="#">Home</a>
+		</li>
+		<li><%=link_to "create a group", new_group_path %></li>
+	</ul>
+</div>
+<div class="span8">
+	<%=yield %></div>
+<%end%>
+
+<%=render :template=>
+"layouts/application"%>
