@@ -1,7 +1,7 @@
 <%content_for :content do %>
 <div class="span2">
 	<ul class="nav nav-list">
-		<li class="nav-header">following</li>
+		<li class="nav-header"><%=link_to "Follow",groups_path%></li>
 		<%@groups.each do |group|%>
 		<li><%=link_to group.name,group_follows_path(group.id)  %></li>
 		<%end%>
@@ -10,13 +10,13 @@
 		</li>
 	</ul>
 </div>
-<div class="span8">
+<div class="span10">
 	<%=yield %>
 
 	<div id="create_group_model" class="modal hide fade"  role="dialog" aria-hidden="true">
 		<%=form_tag groups_path,:method=>:post do %>
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 			<h3 id="model_header">Create a new group</h3>
 		</div>
 		<div class="modal-body">

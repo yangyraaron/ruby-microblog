@@ -5,7 +5,7 @@ class GroupsController < ApplicationController
   # GET /groups.json
   def index
     @groups = Group.all
-    logger.info("groups : #{@groups.inspect}")
+    @follows = User.get_following(current_user.user_id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -95,8 +95,7 @@ class GroupsController < ApplicationController
     end
   end
 
-  def add_user_to_group
-
+  def add_follow_to_group
      respond_to do |format|
       format.html{redirect_to @group}
       format.json { render json: @users }

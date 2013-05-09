@@ -21,7 +21,7 @@ Microblog::Application.routes.draw do
   end
 
   get 'groups/:group_id/follows' =>'groups#follows',:as=>"group_follows"
-  match 'groups/:group_id/follows/:follow_id/create'=>'groups#add_follow_to_group',:var=>:post,:as=>"add_group_follow"
+  post 'groups/:group_id/follows'=>'groups#add_follow_to_group',:as=>"add_group_follow"
 
 
   # The priority is based upon order of creation:

@@ -3,7 +3,7 @@ require 'digest/sha2'
 class User < ActiveRecord::Base
   self.primary_key=:user_id
 
-  has_and_belongs_to_many :group
+  has_and_belongs_to_many :groups
 
   validates :account,:email,:password,:presence=>true
   validates :account,:email,:uniqueness=>true
@@ -54,8 +54,15 @@ class User < ActiveRecord::Base
   end
 
   def self.get_following(user_id)
+    str_join = "INNER JOIN follows f ON users.user_id=f.following_id "
+    str_join << "LEFT JOIN fans fs ON users.user_id=fs.fans_id AND fs.user_id=#{user_id}"
+
+    str_select="users.*,"
+    str_select << "CASE WHEN fs.user_id IS NULL THEN false ELSE true END is_fans_of_current"
+
     self.find(:all,
-              :joins=>"INNER JOIN follows f ON users.user_id=f.following_id",
+              :select=>str_select,
+              :joins=>str_join,
               :conditions=>["f.user_id=?",user_id],
               :order=>"users.account")
   end

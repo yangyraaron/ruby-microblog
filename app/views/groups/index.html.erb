@@ -1,14 +1,59 @@
-<div id="follow_list" class="listview-container grid-layout">
-  <% if @users!=nil%>
-  <% @users.each do %>
+
+<div>
+  <div class="btn-group">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+      Add To Group
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <%@groups.each do |group|%>
+      <li>
+        <%=link_to group.name,add_group_follow_path(group.id),:method=>:post%>
+        </li>
+      <%end%></ul>
+  </div>
+</div>
+
+<hr>
+
+<div id="follow_list">
+  <% if @follows!=nil%>
+  <% @follows.each do |user|%>
 
   <div class="mediumListIconTextItem">
     <%=image_tag("gravatar-user-420.png",:size=>
     "60X60",:class=>"mediumListIconTextItem-Image")%>
     <div class="mediumListIconTextItem-Detail">
-      <h4>user.account</h4>
-      <h6>user.email</h6>
-    </div>
+      <h4>
+        <%=user.account%></h4>
+      <% if user.is_fans_of_current? %>
+      <div> <i class="icon-user"></i> <i class="icon-arrow-left"></i>
+        <i class="icon-arrow-right"></i>
+        <i class="icon-user"></i>
+      </div>
+      <%else%>
+      <div>
+        <i class="icon-ok"></i>
+        followed
+      </div>
+      <%end%>
+
+      <%if(user.groups==nil || user.groups.first==nil)%>
+      <div class="drop-down">
+        <a class="dropdown-toggle" id="<%=user.id%>
+          " data-toggle="dropdown" data-target="#" href="#">ungrouped <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="<%=user.id%>
+          ">
+          <%@groups.each do |group|%>
+          <li>
+            <%=group.name%></li>
+          <%end%></ul>
+      </div>
+      <%else%>
+      <span>
+        <%=user.groups.first.name%></span>
+      <%end%></div>
   </div>
 
   <%end%>
@@ -20,6 +65,12 @@
       e.preventDefault();
       $(this).toggleClass('selected');
    });
+
+  $(document).ready(function () {
+      $('.dropdown-toggle').dropdown();
+  });
+
+
 </script>
 
 <%end%>
