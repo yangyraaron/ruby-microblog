@@ -96,9 +96,25 @@ class GroupsController < ApplicationController
   end
 
   def add_follow_to_group
+    follow_ids = params[:follow_ids]
+    if(follow_ids.present?)
+      @group = Group.find_by_id(params[:group_id])
+
+      logger.info("group : #{@group.inspect}")
+
+      follow_ids.split(";").each do |follow_id|
+        ids = @group.user_ids
+        ids << follow_id
+
+        @group.user_ids = ids
+
+      end
+      
+    end
+
      respond_to do |format|
-      format.html{redirect_to @group}
-      format.json { render json: @users }
+      format.html{redirect_to groups_url}
+      format.json { render json: {:status=>"1"} }
     end
   end
 end

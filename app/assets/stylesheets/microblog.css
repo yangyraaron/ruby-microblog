@@ -51,3 +51,6 @@ li {
 .auto-heigth{
 	height: auto;
 }
+.hidden{
+	visibility: hidden;
+}

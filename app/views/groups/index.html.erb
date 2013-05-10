@@ -1,15 +1,18 @@
-
 <div>
   <div class="btn-group">
     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
       Add To Group
       <span class="caret"></span>
     </a>
-    <ul class="dropdown-menu">
+    <ul id="add_group_menu" class="dropdown-menu">
       <%@groups.each do |group|%>
       <li>
-        <%=link_to group.name,add_group_follow_path(group.id),:method=>:post%>
-        </li>
+        <%=link_to group.name,"#"%>
+        <%=form_tag add_group_follow_path(group.id),:class=>
+        "hidden" do%>
+        <input type="hidden" id="hd_group_<%=group.id%>
+        " name="follow_ids" />
+        <%end%></li>
       <%end%></ul>
   </div>
 </div>
@@ -20,7 +23,7 @@
   <% if @follows!=nil%>
   <% @follows.each do |user|%>
 
-  <div class="mediumListIconTextItem">
+  <div id="<%=user.id%>" class="mediumListIconTextItem">
     <%=image_tag("gravatar-user-420.png",:size=>
     "60X60",:class=>"mediumListIconTextItem-Image")%>
     <div class="mediumListIconTextItem-Detail">
@@ -59,17 +62,54 @@
   <%end%>
   <%end%></div>
 
+<input type="hidden" id="hd_selected_follows" /> 
+
 <%content_for :scripts do %>
 <script type="text/javascript">
-  $('#follow_list').on('click', '.mediumListIconTextItem', function(e){
+
+  $(document).ready(function() {
+
+    $('#follow_list').on('click', '.mediumListIconTextItem', function(e) {
       e.preventDefault();
-      $(this).toggleClass('selected');
-   });
 
-  $(document).ready(function () {
-      $('.dropdown-toggle').dropdown();
+      var item = $(this),
+        hid = $('#hd_selected_follows'),
+        ids = hid.val(),
+        id = item.attr('id');
+
+      item.toggleClass('selected');
+
+      var reg = new RegExp("[;]?" + id + "[;]?");
+
+      if (ids.search(reg) > -1) {
+        ids = ids.replace(reg, ';');
+      } else if (ids == "") {
+        ids = id;
+      } else {
+        ids += ";" + id;
+      }
+
+      if (ids.charAt(0) == ";") ids = ids.substring(1, ids.length);
+
+      if (ids.charAt(ids.length - 1) == ";") ids = ids.substring(0, ids.length - 1);
+
+      hid.val(ids);
+    });
+
+    $('#add_group_menu').find('li').each(function() {
+      var menuItem = $(this),
+        form = menuItem.find('form');
+
+      menuItem.click(function() {
+        var ids = $('#hd_selected_follows').val();
+        var hd = form.find("input[name='follow_ids']");
+
+        hd.val(ids);
+
+        form.submit();
+      });
+    });
   });
-
 
 </script>
 
