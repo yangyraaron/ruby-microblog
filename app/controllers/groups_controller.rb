@@ -4,9 +4,9 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.all
-    @follows = User.get_following(current_user.user_id)
 
+    @follows = User.get_following(current_user.user_id)
+    get_groups
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @groups }
@@ -45,9 +45,10 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(params[:group])
 
+    get_groups
     respond_to do |format|
       if @group.save
-        format.html { redirect_to groups_url, notice: 'Group was successfully created.' }
+        format.html { redirect_to group_follows_url(@group.id) }
         format.json { render json: @group, status: :created, location: @group }
       else
         format.html { render action: "index" }
@@ -61,12 +62,13 @@ class GroupsController < ApplicationController
   def update
     @group = Group.find(params[:id])
 
+    get_groups
     respond_to do |format|
       if @group.update_attributes(params[:group])
-        format.html { redirect_to @group, notice: 'Group was successfully updated.' }
+        format.html {redirect_to group_follows_url(@group.id)}
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html {render action:"index"}
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
@@ -85,13 +87,16 @@ class GroupsController < ApplicationController
   end
 
   def follows
-    @groups = Group.all
-    @group = Group.find_by_id(params[:group_id])
-    @users = @group.users
+    group_id = params[:group_id]
+
+    @group = Group.find_by_id(group_id)
+    @follows = Group.get_follows(group_id)
+
+    get_groups
 
     respond_to do |format|
       format.html {render action:"index"}
-      format.json { render json: @users }
+      format.json { render json: @follows }
     end
   end
 
@@ -99,22 +104,24 @@ class GroupsController < ApplicationController
     follow_ids = params[:follow_ids]
     if(follow_ids.present?)
       @group = Group.find_by_id(params[:group_id])
-
-      logger.info("group : #{@group.inspect}")
+      ids = @group.user_ids
 
       follow_ids.split(";").each do |follow_id|
-        ids = @group.user_ids
         ids << follow_id
-
         @group.user_ids = ids
-
       end
-      
+
     end
 
-     respond_to do |format|
+    respond_to do |format|
       format.html{redirect_to groups_url}
       format.json { render json: {:status=>"1"} }
     end
+  end
+
+  private
+
+  def get_groups
+    @groups = Group.all
   end
 end

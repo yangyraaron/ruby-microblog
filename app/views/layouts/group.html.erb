@@ -2,58 +2,49 @@
 <div class="span2">
 	<ul class="nav nav-list">
 		<li class="nav-header"><%=link_to "Follow",groups_path%></li>
+		<li class="divider"></li>
 		<%@groups.each do |group|%>
 		<li><%=link_to group.name,group_follows_path(group.id)  %></li>
 		<%end%>
+		<li class="divider"></li>
 		<li>
-			<button id="btn_open" type="button" data-toggle="model" data-target="#create_group_model" class="btn btn-primary">new group</button>
+			<button id="btn_add" type="button" data-toggle="model" data-target="#group_model" class="btn btn-primary">new</button>
 		</li>
 	</ul>
 </div>
 <div class="span10">
 	<%=yield %>
 
-	<div id="create_group_model" class="modal hide fade"  role="dialog" aria-hidden="true">
-		<%=form_tag groups_path,:method=>:post do %>
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-			<h3 id="model_header">Create a new group</h3>
-		</div>
-		<div class="modal-body">
+	<%=render 'form',:model_id=>"group_model",:group=>@group %>
 
-			<div class="control-group">
-				<dl class="dl-horizontal">
-					<dt>
-						<%=label_tag(:group,:name,:class=>"h-align") %></dt>
-					<dd>
-						<%= text_field :group,:name,:placeholder=>"name" %></dd>
-					<dt>
-						<%=label_tag(:group,:description,:class=>"h-align") %></dt>
-					<dd>
-						<%= text_area :group,:description,:placeholder=>"description",:rows=>5 %></dd>
-				</dl>
-
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-			<button type="commit" class="btn btn-primary">Save changes</button>
-		</div>
-		<%end%>
-	</div>
 </div>
 <%end%>
 
 <%content_for :scripts do %>
 <script type="text/javascript">
-		$(document).ready(function(){
-			$("#btn_open").click(function(){
-				$("#create_group_model").modal('show');
-			});
+    $(document).ready(function(){
 
-		});
+      $("#btn_add").click(function(){
 
-	</script>
+      	var model = $('#group_model'),
+      		form = model.find('form'),
+      		hMethod = form.find('input[name="_method"]'),
+      		tName = model.find('#group_name'),
+      		tDesc = model.find('#group_description');
+
+      	form.attr('action','<%=groups_path%>');
+      	form.attr('method','post');
+      	hMethod.val('post');
+
+      	tName.val('');
+      	tDesc.val('');
+
+        $("#group_model").modal('show');
+      });
+
+    });
+
+  </script>
 
 <%end%>
 
