@@ -54,8 +54,10 @@ class User < ActiveRecord::Base
   end
 
   def self.get_following(user_id)
+    q_user_id = ActiveRecord::Base.connection.quote(user_id)
+
     str_join = "INNER JOIN follows f ON users.user_id=f.following_id "
-    str_join << "LEFT JOIN fans fs ON users.user_id=fs.fans_id AND fs.user_id=#{user_id}"
+    str_join << "LEFT JOIN fans fs ON users.user_id=fs.fans_id AND fs.user_id=#{q_user_id}"
 
     str_select="users.*,"
     str_select << "CASE WHEN fs.user_id IS NULL THEN false ELSE true END is_fans_of_current"
@@ -65,6 +67,10 @@ class User < ActiveRecord::Base
               :joins=>str_join,
               :conditions=>["f.user_id=?",user_id],
               :order=>"users.account")
+  end
+
+  def get_groups_in(fans_id)
+    self.groups.all(:conditions=>["groups.creator_id=?",fans_id])
   end
 
   def self.get_fans(user_id)

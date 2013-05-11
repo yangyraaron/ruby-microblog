@@ -13,32 +13,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  # GET /groups/1
-  # GET /groups/1.json
-  def show
-    @group = Group.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @group }
-    end
-  end
-
-  # GET /groups/new
-  # GET /groups/new.json
-  def new
-    @group = Group.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @group }
-    end
-  end
-
-  # GET /groups/1/edit
-  def edit
-    @group = Group.find(params[:id])
-  end
 
   # POST /groups
   # POST /groups.json
@@ -96,12 +70,10 @@ class GroupsController < ApplicationController
   end
 
   def follows
-    logger.info('call the follows action')
-
     group_id = params[:group_id]
 
     @group = Group.find_by_id(group_id)
-    @follows = Group.get_follows(group_id)
+    @follows = Group.get_follows(group_id,current_user.user_id)
 
     get_groups
 
