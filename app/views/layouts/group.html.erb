@@ -29,8 +29,10 @@
       	var model = $('#group_model'),
       		form = model.find('form'),
       		hMethod = form.find('input[name="_method"]'),
-      		tName = model.find('#group_name'),
-      		tDesc = model.find('#group_description');
+      		tName = form.find('#group_name'),
+      		tDesc = form.find('#group_description'),
+          hId = form.find('#group_id'),
+          header = form.find('#model_title');
 
       	form.attr('action','<%=groups_path%>');
       	form.attr('method','post');
@@ -38,6 +40,8 @@
 
       	tName.val('');
       	tDesc.val('');
+        hId.val('');
+        header.text('Create a new group');
 
         $("#group_model").modal('show');
       });

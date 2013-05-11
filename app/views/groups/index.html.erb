@@ -17,10 +17,10 @@
   </div>
 
   <%if params[:group_id].present?%>
-  <button id="btn_update" type="button" data-toggle="model" data-target="#group_model" class="btn btn-primary">update</button>
-
-  <%end%>
-</div>
+  <a id="btn_update" type="button" data-toggle="model" data-target="#group_model" href="#" class="btn btn-primary">update</a>
+  <%=link_to "Delete", group_path(params[:group_id]),:method=>:delete,
+  :confirm=>'Are you sure delete the group?',:class=>"btn btn-primary"%>
+  <%end%></div>
 
 <hr>
 
@@ -123,26 +123,26 @@
       });
     });
 
-    <%if @group!=nil%>
-    $('#btn_update').click(function () {
-        var model = $('#group_model'),
-          form = model.find('form'),
-          hMethod = form.find('input[name="_method"]'),
-          tName = model.find('#group_name'),
-          tDesc = model.find('#group_description');
+    <%if@group != nil %> $('#btn_update').click(function() {
+      var model = $('#group_model'),
+        form = model.find('form'),
+        hMethod = form.find('input[name="_method"]'),
+        tName = form.find('#group_name'),
+        tDesc = form.find('#group_description'),
+        hId = form.find('#group_id'),
+        header = form.find('#model_title');
 
-        form.attr('action','<%=group_path(@group.id)%>');
-        //form.attr('method','put');
-        hMethod.val('put');
+      form.attr('action', '<%=group_path(@group.id)%>');
+      //form.attr('method','put');
+      hMethod.val('put');
 
-        tName.val('<%=@group.name%>');
-        tDesc.val('<%=@group.description%>');
+      tName.val('<%=@group.name%>');
+      tDesc.val('<%=@group.description%>');
+      hId.val('<%=@group.id%>');
+      header.text('Edit group');
 
-        $("#group_model").modal('show');
-    });
-    <%end%>
-  });
-
-</script>
+      $("#group_model").modal('show');
+    }); 
+    <% end %>}); </script>
 
 <%end%>

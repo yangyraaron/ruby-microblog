@@ -43,7 +43,10 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
+    logger.info('call the create ation')
+
     @group = Group.new(params[:group])
+    @group.creator_id=current_user.user_id
 
     get_groups
     respond_to do |format|
@@ -60,7 +63,13 @@ class GroupsController < ApplicationController
   # PUT /groups/1
   # PUT /groups/1.json
   def update
+    logger.info('call the update action')
+    logger.info("the group id : #{params[:id]}")
+    logger.info("the group info : #{params[:group]}")
+
     @group = Group.find(params[:id])
+
+    logger.info("the group retrieved from database is : #{@group.inspect}'")
 
     get_groups
     respond_to do |format|
@@ -87,6 +96,8 @@ class GroupsController < ApplicationController
   end
 
   def follows
+    logger.info('call the follows action')
+
     group_id = params[:group_id]
 
     @group = Group.find_by_id(group_id)
@@ -122,6 +133,6 @@ class GroupsController < ApplicationController
   private
 
   def get_groups
-    @groups = Group.all
+    @groups = Group.get_groups(current_user.user_id)
   end
 end

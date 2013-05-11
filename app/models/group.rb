@@ -1,14 +1,14 @@
 class Group < ActiveRecord::Base
 
   # callback defination
-  before_save :generate_id
+  before_create :generate_id
 
   #database defination
   self.primary_key=:id
   has_and_belongs_to_many :users
 
   #mapping defination
-  attr_accessible :id,:name,:description
+  attr_accessible :id,:name,:description,:creator_id
 
   def self.get_follows(group_id)
     group = self.find_by_id(group_id)
@@ -21,8 +21,11 @@ class Group < ActiveRecord::Base
     group.users.find(:all,
                      :select=>str_select,
                      :joins=>str_join,
-                     :conditions=>["groups_users.group_id=?",group_id],
                      :order=>"users.account")
+  end
+
+  def  self.get_groups(user_id)
+     self.where(["creator_id=?",user_id]).order("name").all;
   end
 
   private
