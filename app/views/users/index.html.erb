@@ -4,9 +4,11 @@
 
 <div class="span11">
     <ul>
-        <%if @users!=nil%>
-        <%=render :partial=>"user",:collection=>@users%>
+        <%if @page_users!=nil%>
+        <%=render :partial=>"user",:collection=>@page_users[:users]%>
 
         <%end%>
-        </ul>
+    </ul>
+    <%=render :partial=>"shared/page_bar",:locals=>{:page=>@page_users}%>
+
 </div>

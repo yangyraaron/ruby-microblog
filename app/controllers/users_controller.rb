@@ -1,15 +1,22 @@
 class UsersController < ApplicationController
   skip_before_filter :authorize,:only=>[:new,:create,:show]
   layout "content",:except=>[:new,:create]
+
+  @@page_size=10;
   # GET /users
   # GET /users.json
   def index
-    logger.info("searching user with : #{params["filter"] }")
-    @users = User.search(current_user.user_id,params["filter"])
+    page_index=params[:page_index].present??params[:page_index]:1
 
+    page={:size=>@@page_size,:index=>page_index}
+
+    @page_users = User.search(current_user.user_id,params["filter"],page)
+    @page_users[:total_page]=(@page_users[:count]/@@page_size)+1
+    @page_users[:current_index]=page_index
+   
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @users }
+      format.json { render json: @page_users }
     end
   end
 

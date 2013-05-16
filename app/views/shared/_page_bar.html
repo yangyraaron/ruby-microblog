@@ -1,0 +1,15 @@
+
+<% if page[:total_page]!=1%>
+<div class="pagination">
+	<ul>
+		<%index=1%>
+		<%until index<page[:total_page] %>
+			<%if index==page[:current_index]%>
+			<li class="active"><%=link_to index,url,searches_path(:page_index=>index)%></li>
+			<%end%>
+			<li><%=link_to index,url,searches_path(:page_index=>index)%></li>
+		<%end%>
+		</ul>
+
+</div>
+<%end%>
