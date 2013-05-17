@@ -9,6 +9,6 @@
 
         <%end%>
     </ul>
-    <%=render :partial=>"shared/page_bar",:locals=>{:page=>@page_users}%>
+    <%=render :partial=>"shared/page_bar",:locals=>{:page=>@page_users,:url=>users_path+"?filter="+params["filter"]}%>
 
 </div>

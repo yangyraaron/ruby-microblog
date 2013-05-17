@@ -100,14 +100,15 @@ class User < ActiveRecord::Base
       str_select << "CASE WHEN follows.user_id IS NULL THEN false ELSE true END is_following_by_current,"
       str_select << "CASE WHEN fans.user_id IS NULL THEN false ELSE true END is_fans_of_current"
 
-      str_limit=page[:size]==-1?"" : page[:size]
-      str_offset=page[:index]==-1?"" : (page[:index]-1)*page[:size]
+      # str_limit=page[:size]==-1?"" : page[:size]
+      # str_offset=page[:index]==-1?"" : (page[:index]-1)*page[:size]
 
       filter={:select=>str_select,:joins=>str_join,:conditions=>condition,:order=>"users.account"}
 
-      filter[:limit]=page[:size] unless page[:size]==0
-      filter[:offset]=page[:offset] unless page[:offset]==0
+      filter[:limit]=page[:size] unless page[:size]==-1
+      filter[:offset]=(page[:index]-1)*page[:size] unless page[:offset]==-1
 
+      logger.info("filter : #{filter.inspect}")
       self.find(:all,filter)
     end
 

@@ -2,11 +2,11 @@ class UsersController < ApplicationController
   skip_before_filter :authorize,:only=>[:new,:create,:show]
   layout "content",:except=>[:new,:create]
 
-  @@page_size=10;
+  @@page_size=6;
   # GET /users
   # GET /users.json
   def index
-    page_index=params[:page_index].present??params[:page_index]:1
+    page_index=params["page_index"].present??params["page_index"].to_i : 1
 
     page={:size=>@@page_size,:index=>page_index}
 
