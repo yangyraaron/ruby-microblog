@@ -1,14 +1,16 @@
 <fieldset>
-    <legend>User Searching List</legend>
+	<legend>User Searching List</legend>
 </fieldset>
 
 <div class="span11">
-    <ul>
-        <%if @page_users!=nil%>
-        <%=render :partial=>"user",:collection=>@page_users[:users]%>
-
-        <%end%>
-    </ul>
-    <%=render :partial=>"shared/page_bar",:locals=>{:page=>@page_users,:url=>users_path+"?filter="+params["filter"]}%>
+	<ul>
+		<%if @page_users!=nil%>
+		<%=render :partial=>
+		"user",:collection=>@page_users[:users]%>
+		<li class="span12">
+			  <%=render :partial=>
+			"shared/page_bar",:locals=>{:page=>@page_users,:url=>users_path+"?filter="+params["filter"]}%>
+		</li>
+		<%end%></ul>
 
 </div>

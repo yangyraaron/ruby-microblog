@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
     search_with_relation(current_user_id,condition).first
   end
 
-  def self.get_following(user_id)
+  def self.get_following(user_id,page={:size=>-1,:index=>-1})
     q_user_id = ActiveRecord::Base.connection.quote(user_id)
 
     str_join = "INNER JOIN follows f ON users.user_id=f.following_id "
@@ -65,11 +65,11 @@ class User < ActiveRecord::Base
     str_select="users.*,"
     str_select << "CASE WHEN fs.user_id IS NULL THEN false ELSE true END is_fans_of_current"
 
-    self.find(:all,
-              :select=>str_select,
-              :joins=>str_join,
-              :conditions=>["f.user_id=?",user_id],
-              :order=>"users.account")
+    filter = {:select=>str_select,:joins=>str_join,:conditions=>["f.user_id=?",user_id],:order=>"users.account"}
+    filter[:limit]=page[:size] unless page[:size]==-1
+    filter[:offset]=(page[:index]-1)*page[:size] unless page[:index]==-1
+
+    self.find(:all,filter)
   end
 
   def get_groups_in(fans_id)
@@ -106,7 +106,7 @@ class User < ActiveRecord::Base
       filter={:select=>str_select,:joins=>str_join,:conditions=>condition,:order=>"users.account"}
 
       filter[:limit]=page[:size] unless page[:size]==-1
-      filter[:offset]=(page[:index]-1)*page[:size] unless page[:offset]==-1
+      filter[:offset]=(page[:index]-1)*page[:size] unless page[:index]==-1
 
       logger.info("filter : #{filter.inspect}")
       self.find(:all,filter)

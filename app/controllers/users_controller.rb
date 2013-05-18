@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include ApplicationHelper
+
   skip_before_filter :authorize,:only=>[:new,:create,:show]
   layout "content",:except=>[:new,:create]
 
@@ -11,7 +13,7 @@ class UsersController < ApplicationController
     page={:size=>@@page_size,:index=>page_index}
 
     @page_users = User.search(current_user.user_id,params["filter"],page)
-    @page_users[:total_page]=(@page_users[:count]/@@page_size)+1
+    @page_users[:total_page]= caculate_total_page(@page_users[:count],@@page_size)
     @page_users[:current_index]=page_index
    
     respond_to do |format|

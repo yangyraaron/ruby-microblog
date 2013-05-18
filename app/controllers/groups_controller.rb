@@ -1,11 +1,16 @@
 class GroupsController < ApplicationController
   layout 'group'
 
+  @@page_size=10
   # GET /groups
   # GET /groups.json
   def index
 
+    page_index=params["page_index"].present??params["page_index"].to_i : 1
+    page={:size=>@@page_size,:index=>page_index}
+
     @follows = User.get_following(current_user.user_id)
+
     get_groups
     respond_to do |format|
       format.html # index.html.erb
