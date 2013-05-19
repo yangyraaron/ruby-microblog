@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130511024817) do
+ActiveRecord::Schema.define(:version => 20130519020529) do
+
+  create_table "attachments", :id => false, :force => true do |t|
+    t.integer  "id",         :limit => 8, :null => false
+    t.string   "name"
+    t.string   "path"
+    t.string   "mime"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
 
   create_table "fans", :id => false, :force => true do |t|
     t.integer  "id",         :limit => 8, :null => false
@@ -65,7 +74,6 @@ ActiveRecord::Schema.define(:version => 20130511024817) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.string   "salt"
-    t.string   "password"
   end
 
   add_index "users", ["account"], :name => "index_users_on_account", :unique => true

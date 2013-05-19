@@ -37,6 +37,7 @@ class UsersController < ApplicationController
   # GET /users/new.json
   def new
     @user = User.new
+    @user.user_id=IdGenerator.generate_id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -54,7 +55,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
 
-    @user.user_id=IdGenerator.generate_id
+    if params[:user][:portrait].present
+      
+    end
+
     @user.following_count=0;
     @user.msg_count=0;
     @user.fans_count=0;
