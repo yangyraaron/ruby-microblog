@@ -12,8 +12,8 @@ class User < ActiveRecord::Base
   validate :password_must_be_present
 
   attr_accessible :account, :dynamic_desc, :email, :image_id, :user_id,:msg_count,:following_count,:fans_count,
-    :password_confirmation,:password,:is_following_by_current,:is_fans_of_current
-  attr_accessor :password_confirmation
+    :password_confirmation,:password,:is_following_by_current,:is_fans_of_current,:portrait
+  attr_accessor :password_confirmation,:portrait
   attr_reader  :password
 
   def password=(password)

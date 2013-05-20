@@ -28,6 +28,8 @@
 
     </div>
 
+    <%=f.hidden_field(:user_id)%>
+
     <% if !@user.account || @user.account.empty? %>
 
     <div id="password_group" class="control-group">

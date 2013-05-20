@@ -1,5 +1,7 @@
 Microblog::Application.routes.draw do
 
+  get "attachments/show"
+
   resources :groups
   resources :users
 
