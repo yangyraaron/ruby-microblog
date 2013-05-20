@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     @page_users = User.search(current_user.user_id,params["filter"],page)
     @page_users[:total_page]= caculate_total_page(@page_users[:count],@@page_size)
     @page_users[:current_index]=page_index
-   
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @page_users }
@@ -54,9 +54,17 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
+    portrait = params[:user][:portrait]
 
-    if params[:user][:portrait].present
-      
+    if(portrait!="")
+      content = get_content(portrait.tempfile)
+      extname = File.extname(portrait.original_filename)
+      id=IdGenerator.generate_id
+
+      folder = AttachmentFile.save("#{id}#{extname}",content)
+
+      attachment = Attachment.new({:id=>id,:name=>portrait.original_filename,:path=>folder,:mime=>portrait.content_type})
+      attachment.save
     end
 
     @user.following_count=0;
@@ -66,7 +74,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         signin(@user.account,@user.password)
-        
+
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else

@@ -32,4 +32,12 @@ module ApplicationHelper
     end
   end
 
+  def get_content(io)
+    content=[]
+    io.each_byte do |b|
+      content<<b
+    end
+
+    content
+  end
 end

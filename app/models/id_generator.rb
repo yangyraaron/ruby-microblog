@@ -26,10 +26,10 @@ class IdGenerator
   @@last_timestamp=-1
 
   # a thread lock for safty
-  @lock= Mutex.new
+  @@lock= Mutex.new
 
   def self.generate_id
-    @lock.synchronize{
+    @@lock.synchronize{
       timestamp = time_gen
 
       #if the timestamp is same

@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20130519020529) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.string   "salt"
+    t.string   "password"
   end
 
   add_index "users", ["account"], :name => "index_users_on_account", :unique => true

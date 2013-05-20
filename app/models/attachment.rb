@@ -1,5 +1,6 @@
 class Attachment < ActiveRecord::Base
-  # attr_accessible :title, :body
+  self.primary_key=:id
 
+  attr_accessible :id,:name,:path,:mime
   attr_accessor :id,:name,:path,:mime
 end
