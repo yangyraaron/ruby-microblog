@@ -1,11 +1,7 @@
 <li>
 	<div class="span2">
-		<ul class="thumbnails">
-			<li >
-				<a href="#" class="thumbnail">
-					<%=image_tag("gravatar-user-420.png",:size=>"60X60") %></a>
-			</li>
-		</ul>
+		<a href="#" class="thumbnail">
+			<%=image_tag("gravatar-user-420.png",:size=>"60X60",:url=>attachments_path(:id=>user.image_id),:attach_id=>user.image_id) %></a>
 	</div>
 
 	<div class="span10">
@@ -25,8 +21,7 @@
 		<%else%>
 		<p>please write your dynamic information</p>
 		<%end%>
-		  <%=render "shared/user_audit",:user=>user,:align=>"left"%>
-	</div>
+		<%=render "shared/user_audit",:user=>user,:align=>"left"%></div>
 	<div class="span12">
 		<hr></div>
 

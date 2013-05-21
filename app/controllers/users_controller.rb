@@ -54,17 +54,24 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
-    portrait = params[:user][:portrait]
+    portrait=params[:user][:portrait]
 
-    if(portrait!="")
-      content = get_content(portrait.tempfile)
-      extname = File.extname(portrait.original_filename)
+    if portrait!=""
+      content=portrait.read
+
+      extname=File.extname(portrait.original_filename)
       id=IdGenerator.generate_id
 
-      folder = AttachmentFile.save("#{id}#{extname}",content)
+      folder=AttachmentFile.save("#{id}#{extname}",content)
 
-      attachment = Attachment.new({:id=>id,:name=>portrait.original_filename,:path=>folder,:mime=>portrait.content_type})
+      attachment=Attachment.new({:id=>id,
+                                 :name=>portrait.original_filename,
+                                 :path=>folder,
+                                 :ext=>extname,
+                                 :mime=>portrait.content_type})
       attachment.save
+
+      @user.image_id=id
     end
 
     @user.following_count=0;

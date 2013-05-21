@@ -3,8 +3,23 @@
 </fieldset>
 
 <div class="span11" style="margin-left:0px;">
-    <ul>
+    <ul id="fans">
         <%if @fans!=nil%>
           <%=render :partial=>"fan",:collection=>@fans,:as=>:user%>
         <%end%></ul>
 </div>
+
+
+ <% content_for :scripts do %>
+  <script type="text/javascript">
+  	$(document).ready(function () {
+  		$('#fans').find('img').each(function loadImgs () {
+  			if($(this).attr('attach_id')!=0){
+  		  		lazyLoadImg(this);		
+  			}
+
+  		})
+
+  	});
+  </script>
+  <%end%>

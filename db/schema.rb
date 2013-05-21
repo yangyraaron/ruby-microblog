@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20130519020529) do
     t.integer  "id",         :limit => 8, :null => false
     t.string   "name"
     t.string   "path"
+    t.string   "ext"
     t.string   "mime"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false

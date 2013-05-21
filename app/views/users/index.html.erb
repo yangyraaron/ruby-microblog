@@ -3,7 +3,7 @@
 </fieldset>
 
 <div class="span11">
-	<ul>
+	<ul id="users">
 		<%if @page_users!=nil%>
 		<%=render :partial=>
 		"user",:collection=>@page_users[:users]%>
@@ -14,3 +14,18 @@
 		<%end%></ul>
 
 </div>
+
+ <% content_for :scripts do %>
+  <script type="text/javascript">
+  	$(document).ready(function () {
+  		$('#users').find('img').each(function loadImgs () {
+  			if($(this).attr('attach_id')!=0){
+  		  		lazyLoadImg(this);		
+  			}
+
+  		})
+
+  	});
+  </script>
+  <%end%>
+

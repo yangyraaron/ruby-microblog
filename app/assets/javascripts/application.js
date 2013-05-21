@@ -16,3 +16,28 @@
 //= require bootmetro-charms.js
 //= require bootmetro.js
 //= require bootstrap.js
+
+function lazyLoadImg (img,defaultUrl) {
+	var url = img.getAttribute('url');
+
+	defaultUrl = defaultUrl || img.getAttribute('src');
+
+	function onload(){
+		img.src=url;
+
+		// listen to the load event only once 
+		img.removeEventListener('load',onload);
+	}
+
+	function onerror () {
+		img.src=defaultUrl;
+
+		//listen to the error event only once
+		img.removeEventListener('error',onerror);
+	}
+
+	img.addEventListener('load',onload,false);
+	img.addEventListener('error',onerror,false);
+
+	img.src=defaultUrl;
+}

@@ -1,4 +1,15 @@
-<div class="user-bar <%=layout_class%>
+<div id="<%=id%>" class="user-bar <%=layout_class%>
   ">
-  <%=image_tag( "gravatar-user-420.png",:size=>"60X60",:class =>"img-polaroid") %>
+  <%=image_tag("gravatar-user-420.png",:size=>"60X60",:class =>"img-polaroid",:url=>attachments_path(:id=>user.image_id),:attach_id=>user.image_id) %>
   <%=render "shared/user_audit",:user=>user,:align=>"center"%></div>
+
+  <%content_for :scripts do%>
+  <script type="text/javascript">
+  	$(document).ready(function () {
+  		var img = $('#<%=id%>').find('img')[0];
+
+  		lazyLoadImg(img);
+  	});
+  </script>
+  <%end%>
+
