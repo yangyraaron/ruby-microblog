@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   attr_accessor :password_confirmation,:portrait
   attr_reader  :password
 
+  after_initialize :set_default_image_id
+
   def password=(password)
     @password=password
 
@@ -90,6 +92,10 @@ class User < ActiveRecord::Base
 
     def generate_salt
       self.salt=self.user_id.to_s+rand.to_s
+    end
+
+    def set_default_image_id
+      self.image_id=0 unless self.image_id!=nil
     end
 
     def self.search_with_relation(user_id,condition,page={:size=>-1,:index=>-1})

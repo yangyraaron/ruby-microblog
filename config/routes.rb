@@ -1,7 +1,5 @@
 Microblog::Application.routes.draw do
 
-  get "attachments/show"
-
   resources :groups
   resources :users
 
@@ -24,6 +22,8 @@ Microblog::Application.routes.draw do
 
   get 'groups/:group_id/follows' =>'groups#follows',:as=>"group_follows"
   post 'groups/:group_id/follows'=>'groups#add_follow_to_group',:as=>"add_group_follow"
+
+  get 'attachments/:id'=>'attachments#show',:as=>'attachments'
 
 
   # The priority is based upon order of creation:

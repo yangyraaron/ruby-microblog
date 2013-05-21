@@ -2,6 +2,7 @@ require 'date'
 
 class AttachmentFile
 	@@root_dir=Rails.root.join('attachments')
+	@@default_dir=Rails.root.join('app','assets','images','gravatar-user-420.png')
 
 	def self.save(name,content)
 		folder = self.check_dir
@@ -14,17 +15,11 @@ class AttachmentFile
 		folder
 	end
 
-	def self.get(name,path)
-		content=[]
+	def self.get_path(name,path)
+		file_path="#{File.join(@@root_dir,path,name)}"
+		file_path=@@default_dir unless File.exist?(file_path)
 
-		file_path=="#{File.join(@@root_dir,folder,name)}"
-		File.open(file_path, "r") do |f|
-			f.each_byte do |b|
-				content<<b
-			end
-		end
-
-		content
+		return file_path
 	end
 
 	protected

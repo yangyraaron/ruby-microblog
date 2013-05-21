@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   before_filter :authorize
   protect_from_forgery
 
+  rescue_from ActiveRecord::RecordNotFound,:with=>:record_not_found
+
   def current_user
     session[:user_id]
   end
@@ -21,5 +23,9 @@ class ApplicationController < ActionController::Base
         session[:user_id]=user
         user
       end
+    end
+
+    def record_not_found
+      render :text=>"404 Not Found",:status=>404
     end
 end
