@@ -31,7 +31,7 @@
   <div id="<%=user.id%>
     " class="mediumListIconTextItem">
     <%=image_tag("gravatar-user-420.png",:size=>
-    "60X60",:class=>"mediumListIconTextItem-Image")%>
+    "60X60",:class=>"mediumListIconTextItem-Image",:url=>attachments_path(:id=>user.image_id),:attach_id=>user.image_id)%>
     <div class="mediumListIconTextItem-Detail">
       <h4>
         <%=user.account%></h4>
@@ -106,6 +106,13 @@
 
       hid.val(ids);
     });
+
+    $('#follow_list').find('img').each(function  () {
+        if($(this).attr('attach_id')!=0){
+              lazyLoadImg(this);    
+          }
+    });
+
     /*
       when the add user to group menu has been clicked,then get
       the id list of users which are going to be added from the hidden field,submit the action
@@ -124,7 +131,8 @@
       });
     });
 
-    <%if@group != nil %> $('#btn_update').click(function() {
+    <%if@group != nil %> 
+    $('#btn_update').click(function() {
       var model = $('#group_model'),
         form = model.find('form'),
         hMethod = form.find('input[name="_method"]'),

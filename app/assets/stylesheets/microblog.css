@@ -2,11 +2,6 @@
 	text-align: center;
 }
 
-.h-align {
-	text-align: left;
-	line-height: 30px;
-	display: inline - block;
-}
 
 .right {
 	text-align: right;
@@ -38,10 +33,6 @@
 
 li {
 	list-style-type: none;
-}
-
-.div-signin-input {
-	margin-right: 20px;
 }
 
 .div-signin-content {
