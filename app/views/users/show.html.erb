@@ -1,13 +1,15 @@
-<%=render 'user_bar',:user=>@user,:layout_class=>"span4",:id=>"profile_user_bar"%>
+<%=render 'user_bar',:user=>@user,:layout_class=>"span3",:id=>"profile_user_bar"%>
 
 <div class="span8">
-  <h3>
-    <%=@user.account%></h3>
+  <h2>
+    <%=@user.account%></h2>
 
   <% if @user.dynamic_desc!=nil%>
   <p>
     <%=@user.dynamic_desc%></p>
   <%end%>
+
+  <%=link_to "Edit Profile", edit_user_path(@user.user_id),:class=>"btn btn-primary"%>
 
   <ul class="inline">
     <%if @user.is_following_by_current? && @user.is_fans_of_current? %>

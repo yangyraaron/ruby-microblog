@@ -8,8 +8,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    page_index=params["page_index"].present??params["page_index"].to_i : 1
 
+    page_index=params["page_index"].present??params["page_index"].to_i : 1
     page={:size=>@@page_size,:index=>page_index}
 
     @page_users = User.search(current_user.user_id,params["filter"],page)
@@ -48,6 +48,11 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @user }
+    end
   end
 
   # POST /users
@@ -56,23 +61,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     portrait=params[:user][:portrait]
 
-    if portrait!=""
-      content=portrait.read
-
-      extname=File.extname(portrait.original_filename)
-      id=IdGenerator.generate_id
-
-      folder=AttachmentFile.save("#{id}#{extname}",content)
-
-      attachment=Attachment.new({:id=>id,
-                                 :name=>portrait.original_filename,
-                                 :path=>folder,
-                                 :ext=>extname,
-                                 :mime=>portrait.content_type})
-      attachment.save
-
-      @user.image_id=id
-    end
+    @user.image_id=save_user_pic(portrait)
 
     @user.following_count=0;
     @user.msg_count=0;
@@ -95,6 +84,10 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
+    portrait=params[:user][:portrait]
+
+    @user.image_id=save_user_pic(portrait)
+    params[:user][:image_id]=@user.image_id
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -118,6 +111,27 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    def save_user_pic(portrait)
+      if !portrait.nil?
+        content=portrait.read
+
+        extname=File.extname(portrait.original_filename)
+        id=IdGenerator.generate_id
+
+        folder=AttachmentFile.save("#{id}#{extname}",content)
+
+        attachment=Attachment.new({:id=>id,
+                                   :name=>portrait.original_filename,
+                                   :path=>folder,
+                                   :ext=>extname,
+                                   :mime=>portrait.content_type})
+        attachment.save
+
+        id
+      end
+    end
 
 
 end

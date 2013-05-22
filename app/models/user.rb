@@ -5,11 +5,12 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :groups
 
-  validates :account,:email,:password,:presence=>true
+  validates :account,:email,:presence=>true
   validates :account,:email,:uniqueness=>true
   validates :password,:confirmation=>true
   validates :email,:format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/, :on => :create }
-  validate :password_must_be_present
+  #validate :password_must_be_present
+  validates :password,:presence=>true,:on=>:create
 
   attr_accessible :account, :dynamic_desc, :email, :image_id, :user_id,:msg_count,:following_count,:fans_count,
     :password_confirmation,:password,:is_following_by_current,:is_fans_of_current,:portrait
@@ -47,6 +48,9 @@ class User < ActiveRecord::Base
       page_users = search_with_relation(user_id,["users.account like ? or users.email like ?",like_filter,like_filter],page)
 
       {:count=>count,:users=>page_users}
+
+    else
+       {:count=>0,:users=>[]}
     end
   end
 
@@ -86,8 +90,8 @@ class User < ActiveRecord::Base
   end
 
   private
-    def password_must_be_present
-      errors.add(:password,"Missing a password") unless hashed_password.present?
+    def password_must_be_present?
+      hashed_password.present?
     end
 
     def generate_salt

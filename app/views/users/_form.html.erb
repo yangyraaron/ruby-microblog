@@ -1,8 +1,9 @@
 <%= form_for @user,:html=>{:class=>".form-horizontal"} do |f| %>
 <div class="container-fluid">
   <div class="span2">
-    <%=image_tag( "gravatar-user-420.png",:size=>"60X60",:class =>"img-polaroid") %>
-    <%=f.file_field 'portrait'%>
+    <%=image_tag( "gravatar-user-420.png",:size=>"60X60",:class =>"img-polaroid",:id=>"img_profile",:url=>attachments_path(:id=>@user.image_id),:attach_id=>@user.image_id) %>
+
+    <%=f.file_field 'portrait',:id=>"attach_upload"%>
   </div>
 
   <div class="span8 offset1">
@@ -89,9 +90,6 @@ $(document).ready(function() {
     var confirmPassword = $('#user_password_confirmation').val();
     var isValide = true;
 
-    console.log('password', password);
-    console.log('confirmPassword', confirmPassword);
-
     if(password===""){
       var alert = showAlert("password is empty!",$("#password_group"));
       isValide = false;
@@ -109,6 +107,36 @@ $(document).ready(function() {
     }
 
   });
+
+  var jImg = $('#img_profile');
+  if(jImg.attr('attach_id')!=0){
+    lazyLoadImg(jImg[0]);
+  }
+
+  // $('#attach_upload').on('change',function onFileSelected () {
+  //   jImg.attr('src',$(this).val());
+
+  //   console.log($(this).val());
+  // })
+
+  if(window.File && window.FileReader && window.FileList && window.Blob){
+    var fileUpload = $('#attach_upload')[0] ; 
+
+    function preview (e) {
+      var file = e.target.files[0];
+
+      var reader = new FileReader();
+
+      reader.onload=function(e){
+        jImg[0].src=e.target.result;
+      }
+
+      reader.readAsDataURL(file);
+
+    }
+
+    fileUpload.addEventListener('change',preview,false);
+  }
 
   function showAlert(msg,container){
     var alert = container.find("#user_alert");

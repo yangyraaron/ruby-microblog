@@ -23,11 +23,8 @@
 		<li></li>
 	</ul>
 </div>
-<div class="span8">
+<div class="span10">
 	<%=yield %></div>
-<div class="span2">
-	<%=render 'users/user_bar',:user=>session[:user_id],:layout_class=>"span12 user-bar-font",:id=>"left_user_bar"%>
-</div>
 <%end%>
 
 <%=render :template=>"layouts/application"%>
