@@ -9,7 +9,6 @@ class CreateAttachments < ActiveRecord::Migration
 
       t.timestamps
     end
-
     execute "ALTER TABLE attachments ADD PRIMARY KEY (id);"
   end
 

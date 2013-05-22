@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130519020529) do
+ActiveRecord::Schema.define(:version => 20130522114412) do
 
   create_table "attachments", :id => false, :force => true do |t|
     t.integer  "id",         :limit => 8, :null => false
@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(:version => 20130519020529) do
 
   add_index "fans", ["fans_id"], :name => "index_fans_on_fans_id"
   add_index "fans", ["user_id"], :name => "index_fans_on_user_id"
+
+  create_table "feeds", :id => false, :force => true do |t|
+    t.integer  "id",             :limit => 8, :null => false
+    t.string   "content"
+    t.integer  "creator_id",     :limit => 8
+    t.integer  "attach_id",      :limit => 8
+    t.integer  "origin_feed_id", :limit => 8
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  add_index "feeds", ["creator_id"], :name => "index_feeds_on_creator_id"
 
   create_table "follows", :id => false, :force => true do |t|
     t.integer  "id",           :limit => 8, :null => false

@@ -1,5 +1,8 @@
 Microblog::Application.routes.draw do
 
+  resources :feeds
+
+
   resources :groups
   resources :users
 
