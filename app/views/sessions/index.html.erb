@@ -1,6 +1,7 @@
 <div class="span9">
 	<%=form_tag(feeds_path) do %>
 	<%=text_area :feed,:content,:rows=>5,:class=>'span12 overflow-none'%>
+	<%=submit_tag "Publish" ,:class=>'pull-right' %>
 	<%end%>
 
 	<ul class="nav nav-tabs">

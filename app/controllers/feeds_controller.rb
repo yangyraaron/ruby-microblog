@@ -42,6 +42,8 @@ class FeedsController < ApplicationController
   def create
     @feed = Feed.new(params[:feed])
 
+    @feed.creator_id=current_user.user_id
+
     respond_to do |format|
       if @feed.save
         format.html { redirect_to @feed, notice: 'Feed was successfully created.' }

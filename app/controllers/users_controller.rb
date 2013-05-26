@@ -26,6 +26,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.get_with_relation(params[:id],current_user.user_id)
+    @feeds = Feed.get_user_feeds(current_user.user_id)
 
     respond_to do |format|
       format.html # show.html.erb
