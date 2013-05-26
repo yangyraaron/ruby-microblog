@@ -1,25 +1,28 @@
 <fieldset>
-    <legend><h2>User Fans List</h2></legend>
+  <legend>
+    <h2>User Fans List</h2>
+  </legend>
 </fieldset>
 
 <div class="span11" style="margin-left:0px;">
-    <ul id="fans">
-        <%if @fans!=nil%>
-          <%=render :partial=>"fan",:collection=>@fans,:as=>:user%>
-        <%end%></ul>
+  <ul id="fans">
+    <%if @fans!=nil%>
+    <%=render :partial=>
+    "fan",:collection=>@fans,:as=>:user%>
+    <%end%></ul>
 </div>
 
+<% content_for :scripts do %>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('#fans').find('img').each(function loadImgs () {
+        if($(this).attr('attach_id')!=0){
+          var url = "<%=asset_path 'gravatar-user-420.png'%>";
+          lazyLoadImg(this,url);  
+        }
 
- <% content_for :scripts do %>
-  <script type="text/javascript">
-  	$(document).ready(function () {
-  		$('#fans').find('img').each(function loadImgs () {
-  			if($(this).attr('attach_id')!=0){
-  		  		lazyLoadImg(this);		
-  			}
+      })
 
-  		})
-
-  	});
+    });
   </script>
-  <%end%>
+<%end%>

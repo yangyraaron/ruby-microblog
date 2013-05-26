@@ -29,7 +29,9 @@ function lazyLoadImg (img,defaultUrl) {
 		img.removeEventListener('load',onload);
 	}
 
-	function onerror () {
+	function onerror (e) {
+		console.log('loading img error : '+e);
+
 		img.src=defaultUrl;
 
 		//listen to the error event only once
