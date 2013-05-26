@@ -1,14 +1,14 @@
-<div>
-<fieldset>
-	<legend>Home</legend>
-	<div class="hero-unit">
-		<h1>Welcome!</h1>
-		<p>
-			Welcome to microblog, please register if you still don't register or
-		sign in to enjoy the journey.
-		</p>
-		<p>
-			<%=link_to "Sign in >>", signin_path,:class=>"btn btn-primary" %></p>
-	</div>
-</fieldset>
+<div class="span9">
+	<%=form_tag(feeds_path) do %>
+	<%=text_area :feed,:content,:rows=>5,:class=>'span12 overflow-none'%>
+	<%end%>
+
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a href="#">Feeds</a>
+		</li>
+	</ul>
 </div>
+
+<%= render 'users/user_bar',:user=>
+session[:user_id],:id=>"current_user_profile",:layout_class=>"span3"%>

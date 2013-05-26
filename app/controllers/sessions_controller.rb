@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-	skip_before_filter :authorize
+	skip_before_filter :authorize,:only=>[:new,:create]
+  layout "content",:only=>[:index]
   def index
   	respond_to do |format|
   		logger.info("the format is #{format}")
