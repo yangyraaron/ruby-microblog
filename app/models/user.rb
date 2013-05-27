@@ -118,7 +118,6 @@ class User < ActiveRecord::Base
       filter[:limit]=page[:size] unless page[:size]==-1
       filter[:offset]=(page[:index]-1)*page[:size] unless page[:index]==-1
 
-      logger.info("filter : #{filter.inspect}")
       self.find(:all,filter)
     end
 

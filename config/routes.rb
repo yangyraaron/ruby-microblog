@@ -28,6 +28,8 @@ Microblog::Application.routes.draw do
 
   get 'attachments/:id'=>'attachments#show',:as=>'attachments'
 
+  get 'users/:user_id/profile/feeds'=>'users#feeds',:as=>'self_feeds'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

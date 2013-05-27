@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.get_with_relation(params[:id],current_user.user_id)
-    @feeds = Feed.get_user_feeds(current_user.user_id)
+    #@feeds = Feed.get_user_feeds(current_user.user_id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -110,6 +110,20 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to users_url }
       format.json { head :no_content }
+    end
+  end
+
+  def feeds
+    page_index=params["page_index"].present??params["page_index"].to_i : 1
+    page={:size=>@@page_size,:index=>page_index}
+
+    @page_feeds = Feed.get_user_feeds(current_user.user_id,page)
+    @page_feeds[:total_page]= caculate_total_page(@page_feeds[:count],@@page_size)
+    @page_feeds[:current_index]=page_index
+
+    respond_to do |format|
+      format.html { redirect_to user_url}
+      format.json { render json: @page_feeds}
     end
   end
 

@@ -46,25 +46,26 @@
 </div>
 
 <div class="span12">
-  <ul class="unstyled">
-    <% @feeds.each do |f| %>
-    <li>
-      <div>
-        <ul class="unstyled">
-          <li>
-            <p class="lead">
-              <%=f.content%></p>
-          </li>
-
-          <li>
-              <%=f.created_at%>
-            <div class="pull-right">
-              Reforward()|Comment()
-            </div>
-          </li>
-        </ul>
-
-      </div>
-      <hr></li>
-    <%end%></ul>
+  <ul class="unstyled"></ul>
+  <div id="loading_bar"  class="progress progress-indeterminate offset4">
+    <div class="bar"></div>
+  </div>
 </div>
+  <div class="span12 pagination" id="page_feeds">
+
+  </div>
+
+<%=content_for :scripts do%>
+<script type="text/javascript">
+  $(document).ready(function (e) {
+    function onload (e) {
+      $.getJSON('<%=self_feeds_path(session[:user_id])%>.json',function (data) {
+        console.log(data);
+      });
+    }
+
+    onload();
+  });
+
+</script>
+<%end%>
