@@ -37,7 +37,7 @@
   </div>
 </div>
 
-<div class="span12">
+<div>
   <ul class="nav nav-tabs">
     <li class="active">
       <a href="#">Home</a>
@@ -45,26 +45,24 @@
   </ul>
 </div>
 
-<div class="span12">
-  <ul class="unstyled"></ul>
+<div>
   <div id="loading_bar"  class="progress progress-indeterminate offset4">
     <div class="bar"></div>
   </div>
-</div>
-  <div class="span12 pagination" id="page_feeds">
+  <ul id="feeds_container" class="unstyled"></ul>
 
-  </div>
+</div>
+<div class="pagination center" id="page_feeds">
+  <ul id="page_Container"></ul>
+</div>
 
 <%=content_for :scripts do%>
 <script type="text/javascript">
   $(document).ready(function (e) {
-    function onload (e) {
-      $.getJSON('<%=self_feeds_path(session[:user_id])%>.json',function (data) {
-        console.log(data);
-      });
-    }
 
-    onload();
+    var feeds = new feedsList('feeds_container','page_Container');
+    feeds.refresh('<%=self_feeds_path(@user.user_id)%>.json');
+
   });
 
 </script>

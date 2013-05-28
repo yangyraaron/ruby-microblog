@@ -9,7 +9,31 @@
 			<a href="#">Feeds</a>
 		</li>
 	</ul>
+
+	<div>
+  <div id="loading_bar"  class="progress progress-indeterminate offset4">
+    <div class="bar"></div>
+  </div>
+  <ul id="feeds_container" class="unstyled"></ul>
+
 </div>
+<div class="pagination center" id="page_feeds">
+  <ul id="page_Container"></ul>
+</div>
+</div>
+
+<%=content_for :scripts do%>
+<script type="text/javascript">
+  $(document).ready(function (e) {
+
+    var feeds = new feedsList('feeds_container','page_Container');
+    feeds.refresh('<%=refresh_feeds_path(session[:user_id])%>.json');
+
+  });
+
+</script>
+<%end%>
+
 
 <%= render 'users/user_bar',:user=>
 session[:user_id],:id=>"current_user_profile",:layout_class=>"span3"%>

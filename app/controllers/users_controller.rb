@@ -114,16 +114,31 @@ class UsersController < ApplicationController
   end
 
   def feeds
+    user_id = params[:id]
     page_index=params["page_index"].present??params["page_index"].to_i : 1
     page={:size=>@@page_size,:index=>page_index}
 
-    @page_feeds = Feed.get_user_feeds(current_user.user_id,page)
+    @page_feeds = Feed.get_user_feeds(user_id,page)
     @page_feeds[:total_page]= caculate_total_page(@page_feeds[:count],@@page_size)
     @page_feeds[:current_index]=page_index
 
     respond_to do |format|
       format.html { redirect_to user_url}
       format.json { render json: @page_feeds}
+    end
+  end
+
+  def refresh_feeds
+    page_index=params["page_index"].present??params["page_index"].to_i : 1
+    page={:size=>@@page_size,:index=>page_index}
+
+    @page_feeds = Feed.get_feeds(current_user.user_id,page)
+    @page_feeds[:total_page]= caculate_total_page(@page_feeds[:count],@@page_size)
+    @page_feeds[:current_index]=page_index
+
+    respond_to do |format|
+      format.html { redirect_to home_url}
+      format.json {render json: @page_feeds}
     end
   end
 
