@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
 
   def create
     if user = signin(params[:account],params[:password])
-      redirect_to user
+      redirect_to home_url
     else
       redirect_to signin_url, :alert=>"Invalid user/password combination"
     end
