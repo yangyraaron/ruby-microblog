@@ -65,7 +65,8 @@ function appendParamsToUrl(url, params) {
 	return url;
 }
 
-function feedsList(listId, pageId) {
+function feedsList(listId, pageId,options) {
+	this._options = options || {};
 	this.container = $('#' + listId);
 	this.pageContainer = $('#' + pageId);
 }
@@ -81,7 +82,15 @@ feedsList.prototype = {
 		}
 
 		var content = $("<li><p>" + item.content + "</p></li>");
-		var bar = $('<li class="text-info">' + item.created_at + '<div class="pull-right">Reforward() | Comment()</div></li>');
+		var lkForward = this.generateForward(item);
+		var lkComment = this.generateComment(item);
+
+		var bar = $('<li class="text-info">' + item.created_at + '</li>');
+		var barContainer = $('<div class="pull-right"></div>');
+		barContainer.append(lkForward);
+		barContainer.append(' | ');
+		barContainer.append(lkComment);
+		bar.append(barContainer);
 
 		bodyContainer.append(content);
 		bodyContainer.append(bar);
@@ -108,6 +117,25 @@ feedsList.prototype = {
 		}
 
 		return itemContainer;
+	},
+	generateForward:function(item){
+		var lkForward = $('<a href="#">Forward('+item.forward_count+')</a>');
+
+		var forward = this._options.forward;
+		if(forward){
+			lkForward.click(function triggerForward(e){forward(e,item)});
+		}
+
+		return lkForward;
+	},
+	generateComment:function (item) {
+		var lkComment = $('<a href="#">Comment('+item.comment_count+')</a>');
+		var comment = this._options.comment;
+		if(comment){
+			lkComment.click(function triggerComment(e){e,comment(item)});
+		}
+
+		return lkComment;
 	},
 	refresh: function(url, data) {
 		if (url) {

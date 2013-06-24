@@ -1,7 +1,9 @@
 class Feed < ActiveRecord::Base
   before_create :generate_id
+  before_save :default_values
 
   attr_accessible :attach_id, :content, :creator_id, :id, :origin_feed_id,
+                  :forward_count,:comment_count,
                   :creator_account,:creator_image_id
 
   def self.get_user_feeds(user_id,page={:size=>10,:index=>1})
@@ -14,6 +16,7 @@ class Feed < ActiveRecord::Base
   		.limit(page[:size])
   		.offset(offset)
   		.all
+      
   	{:feeds=>feeds,:count=>count}
   end
 
@@ -32,8 +35,14 @@ class Feed < ActiveRecord::Base
     {:feeds=>feeds,:count=>count}
 
   end
+  
   private
     def generate_id
       self.id = IdGenerator.generate_id
+    end
+
+    def default_values
+      self.forward_count ||=0;
+      self.comment_count ||=0;
     end
 end

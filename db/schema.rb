@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130522114412) do
+ActiveRecord::Schema.define(:version => 20130624021329) do
 
   create_table "attachments", :id => false, :force => true do |t|
     t.integer  "id",         :limit => 8, :null => false
@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(:version => 20130522114412) do
     t.integer  "origin_feed_id", :limit => 8
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
+    t.integer  "forward_count"
+    t.integer  "comment_count"
   end
 
   add_index "feeds", ["creator_id"], :name => "index_feeds_on_creator_id"

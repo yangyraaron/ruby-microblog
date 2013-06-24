@@ -1,7 +1,9 @@
 <div class="span9">
 	<%=form_tag(feeds_path) do %>
-	<%=text_area :feed,:content,:rows=>5,:class=>'span12 overflow-none'%>
-	<%=submit_tag "Publish" ,:class=>'pull-right' %>
+	<%=text_area :feed,:content,:rows=>
+	5,:class=>'span12 overflow-none'%>
+	<%=submit_tag "Publish" ,:class=>
+	'pull-right' %>
 	<%end%>
 
 	<ul class="nav nav-tabs">
@@ -11,29 +13,118 @@
 	</ul>
 
 	<div>
-  <div id="loading_bar"  class="progress progress-indeterminate offset4">
-    <div class="bar"></div>
-  </div>
-  <ul id="feeds_container" class="unstyled"></ul>
+		<div id="loading_bar"  class="progress progress-indeterminate offset4">
+			<div class="bar"></div>
+		</div>
+		<ul id="feeds_container" class="unstyled"></ul>
 
-</div>
-<div class="pagination center" id="page_feeds">
-  <ul id="page_Container"></ul>
-</div>
+	</div>
+	<div class="pagination center" id="page_feeds">
+		<ul id="page_Container"></ul>
+	</div>
+
+	<div id="alert_success" class="alert alert-success loading alert-success offset3">
+		<ul class="inline">
+			<li><i class="icon-checkmark-2"></i></li>
+			<li>		<h4>Success</h4></li>
+		</ul>
+	</div>
+
+	<div id="forward_modal" class="modal hide fade">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+			<h3>Forward</h3>
+		</div>
+		<div class="modal-body">
+			<div class="accordion" id="feed_accordion">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a id="forward_feed_header" href="#forward_feed_content" class="accordion-toggle truncate-feed-header" data-toggle="collapse" data-parent="#feed_accordion"></a>
+					</div>
+					<div id="forward_feed_content" class="accordion-body collapse">
+						<div class="accordion-inner">
+							<p id="original_feed_content"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div id="forward_progress" class="progress progress-indeterminate loading span4 offset5">
+					<div class="win-ring small"></div>
+				</div>
+				<textarea id="forward_content" rows="3" class="span12"></textarea>
+
+			</div>
+
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" aria-hidden="true" data-dismiss="modal">Close</a>
+			<a href="#" class="btn btn-primary" id="forward_submit">Forward</a>
+		</div>
+	</div>
+
 </div>
 
 <%=content_for :scripts do%>
 <script type="text/javascript">
   $(document).ready(function (e) {
 
-    var feeds = new feedsList('feeds_container','page_Container');
+  	var options = {
+  		forward:function(e,feed){
+  			$('#original_feed_content').text(feed.content);
+  			$('#forward_feed_header').text(feed.creator_account+ ':' +feed.content);
+  			$('#forward_modal').modal();
+
+  			$('#feed_accordion').data('forwardItem',feed);
+  		}
+  	};
+
+  	//get all feeds and render
+    var feeds = new feedsList('feeds_container','page_Container',options);
     feeds.refresh('<%=refresh_feeds_path(session[:user_id])%>.json');
+
+    //subscribte the forward event
+    $('#forward_submit').click(function forward(){
+    	var that = $(this),
+    		model = $('#forward_modal'),
+    		alert = $('#alert_success');
+
+    	that.attr('disabled','true');
+    	$('#forward_progress').css('visibility','visible');
+
+    	var feed = $('#feed_accordion').data('forwardItem');
+    	if(!feed)
+    		return;
+
+    	var url = 'feeds/'+feed.id+'/forward.json';
+
+    	var origin_feed_id = feed.origin_feed_id || feed.id;
+    	var newFeed = {origin_feed_id:origin_feed_id};
+    	newFeed.content = $('#forward_content').val()+'//@'+feed.creator_account+':'+feed.content;
+
+    	$.post(url,{feed:newFeed},function(data){
+    		if(data){
+    			that.attr('disabled',false);
+    			$('#forward_progress').css('visibility','hidden');
+
+    			model.modal('hide');
+    			alert.css('visibility','visible');
+
+    			var timeId = setTimeout(function hiddenAlert(){
+    				alert.css('visibility','hidden');
+    				window.clearTimeout(timeId);
+    			},1000);
+
+    			feeds.refresh();
+
+    		}
+    	});
+    });
 
   });
 
 </script>
 <%end%>
-
 
 <%= render 'users/user_bar',:user=>
 session[:user_id],:id=>"current_user_profile",:layout_class=>"span3"%>

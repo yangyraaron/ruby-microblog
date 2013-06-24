@@ -62,3 +62,21 @@ li {
 .none-margin{
 	margin: 0px;
 }
+
+.truncate-feed-header{
+	width: 250px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.loading{
+	position: absolute;
+	vertical-align: middle;
+	visibility: hidden;
+}
+
+.alert-success{
+	visibility: hidden;
+	top:500px;
+}

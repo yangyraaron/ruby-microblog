@@ -1,6 +1,8 @@
 Microblog::Application.routes.draw do
 
-  resources :feeds
+  resources :feeds do 
+    post "forward"=>:forward, :as=>"forward"
+  end
 
 
   resources :groups
