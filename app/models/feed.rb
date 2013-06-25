@@ -35,6 +35,14 @@ class Feed < ActiveRecord::Base
     {:feeds=>feeds,:count=>count}
 
   end
+
+  def this_id
+    return self.id.to_s
+  end
+
+  def origin_id
+    return self.origin_feed_id.to_s
+  end
   
   private
     def generate_id

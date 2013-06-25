@@ -136,9 +136,11 @@ class UsersController < ApplicationController
     @page_feeds[:total_page]= caculate_total_page(@page_feeds[:count],@@page_size)
     @page_feeds[:current_index]=page_index
 
+    logger.info("page feeds:#{@page_feeds}")
+
     respond_to do |format|
       format.html { redirect_to home_url}
-      format.json {render json: @page_feeds}
+      format.json { render json: @page_feeds.as_json(:except=>[:id,:origin_feed_id],:methods=>[:this_id,:origin_id])}
     end
   end
 
@@ -162,6 +164,5 @@ class UsersController < ApplicationController
         id
       end
     end
-
 
 end

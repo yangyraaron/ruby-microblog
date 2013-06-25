@@ -96,9 +96,9 @@
     	if(!feed)
     		return;
 
-    	var url = 'feeds/'+feed.id+'/forward.json';
+    	var url = 'feeds/'+feed.this_id+'/forward.json';
 
-    	var origin_feed_id = feed.origin_feed_id || feed.id;
+    	var origin_feed_id = feed.origin_id || feed.this_id;
     	var newFeed = {origin_feed_id:origin_feed_id};
     	newFeed.content = $('#forward_content').val()+'//@'+feed.creator_account+':'+feed.content;
 
