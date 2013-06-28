@@ -65,7 +65,7 @@ function appendParamsToUrl(url, params) {
 	return url;
 }
 
-function feedsList(listId, pageId,options) {
+function feedsList(listId, pageId, options) {
 	this._options = options || {};
 	this.container = $('#' + listId);
 	this.pageContainer = $('#' + pageId);
@@ -74,14 +74,55 @@ function feedsList(listId, pageId,options) {
 feedsList.prototype = {
 	generateItem: function(item) {
 		var itemContainer = $("<li></li>");
+		var layout = this._generatePrototype(item,true);
+			itemContainer.append(layout);
 
-		//create the body content
+		return itemContainer;
+	},
+	_generatePrototype: function(item, showPortrait,isOrigin) {
+		var layout = $('<div class="container-fluid feed-item"><div class="row-fluid"></div></div>');
+		var body = $('<div class="span10"></div>');
+		var row = layout.find(".row-fluid");
+
+		if (showPortrait && item.creator_account) {
+			var portrait = $('<img src="attachments/' + item.creator_image_id + '" />');
+			var portraitLayout = $('<a href="#" class="thumbnail"></a>')
+			var leftBar = $('<div class="span2"></div>');
+
+			portraitLayout.append(portrait);
+			leftBar.append(portraitLayout);
+			row.append(leftBar);
+		}else{
+			var body = $('<div class="span12"></div>');
+		}
+
+		body.append(this._generateBodyContainer(item,showPortrait,isOrigin));
+		row.append(body);
+		return row;
+	},
+	_generateBodyContainer:function (item,showPortrait,isOrigin) {
 		var bodyContainer = $('<ul class="unstyled"></ul>');
-		if(item.creator_account){
-			bodyContainer.append('<li class="feed-title"><h4>'+item.creator_account+'</h4></li>')
+		var prefix = showPortrait? "":"@";
+		if (item.creator_account) {
+			var headerContainer = $('<li class="feed-title"><h4>'+prefix+item.creator_account+'</h4></li>');
+
+			if(isOrigin)
+				headerContainer = $('<li class="feed-title"><h5>'+prefix+item.creator_account+'</h5></li>');
+
+			bodyContainer.append(headerContainer);
 		}
 
 		var content = $("<li><p>" + item.content + "</p></li>");
+		bodyContainer.append(content);
+
+		if(item.origin_feed_json){
+			var origin = $("<li class='inner_feed'></li>");
+			var originItem = this._generatePrototype(item.origin_feed_json, false,true);
+			origin.append(originItem);
+
+			bodyContainer.append(origin);
+		}
+
 		var lkForward = this.generateForward(item);
 		var lkComment = this.generateComment(item);
 
@@ -92,47 +133,29 @@ feedsList.prototype = {
 		barContainer.append(lkComment);
 		bar.append(barContainer);
 
-		bodyContainer.append(content);
 		bodyContainer.append(bar);
 
-		if (item.creator_account) {
-			var layout = $('<div class="container-fluid feed-item"><div class="row-fluid"></div></div>');
-			var leftBar = $('<div class="span2"></div>');
-			var body = $('<div class="span10"></div>');
-			var row = layout.find(".row-fluid");
-
-			row.append(leftBar);
-			row.append(body);
-
-			var portrait = $('<img src="attachments/'+ item.creator_image_id +'" />');
-			var portraitLayout = $('<a href="#" class="thumbnail"></a>')
-			portraitLayout.append(portrait);
-			leftBar.append(portraitLayout);
-
-			body.append(bodyContainer);
-			itemContainer.append(layout);
-
-		}else{
-			itemContainer.append(bodyContainer);
-		}
-
-		return itemContainer;
+		return bodyContainer;
 	},
-	generateForward:function(item){
-		var lkForward = $('<a href="#">Forward('+item.forward_count+')</a>');
+	generateForward: function(item) {
+		var lkForward = $('<a href="#">Forward(' + item.forward_count + ')</a>');
 
 		var forward = this._options.forward;
-		if(forward){
-			lkForward.click(function triggerForward(e){forward(e,item)});
+		if (forward) {
+			lkForward.click(function triggerForward(e) {
+				forward(e, item)
+			});
 		}
 
 		return lkForward;
 	},
-	generateComment:function (item) {
-		var lkComment = $('<a href="#">Comment('+item.comment_count+')</a>');
+	generateComment: function(item) {
+		var lkComment = $('<a href="#">Comment(' + item.comment_count + ')</a>');
 		var comment = this._options.comment;
-		if(comment){
-			lkComment.click(function triggerComment(e){e,comment(item)});
+		if (comment) {
+			lkComment.click(function triggerComment(e) {
+				e, comment(item)
+			});
 		}
 
 		return lkComment;

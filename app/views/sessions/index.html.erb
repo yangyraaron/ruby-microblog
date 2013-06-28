@@ -100,7 +100,12 @@
 
     	var origin_feed_id = feed.origin_id || feed.this_id;
     	var newFeed = {origin_feed_id:origin_feed_id};
-    	newFeed.content = $('#forward_content').val()+'//@'+feed.creator_account+':'+feed.content;
+
+    	if(feed.origin_id){
+    		newFeed.content = $('#forward_content').val()+'//@'+feed.creator_account+':'+feed.content;
+    	}else{
+    		newFeed.content = $('#forward_content').val();
+    	}
 
     	$.post(url,{feed:newFeed},function(data){
     		if(data){
