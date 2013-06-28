@@ -62,6 +62,7 @@ class FeedsController < ApplicationController
     @feed = Feed.new(params[:feed])
     @feed.creator_id = current_user.user_id
 
+    logger.info("origin feed id: #{@feed.origin_feed_id}")
     respond_to do |format|
       if @feed.save
         User.update_counters(current_user.user_id,{:msg_count=>1})

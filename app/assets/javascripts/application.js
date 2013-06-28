@@ -81,7 +81,7 @@ feedsList.prototype = {
 			bodyContainer.append('<li class="feed-title"><h4>'+item.creator_account+'</h4></li>')
 		}
 
-		var content = $("<li><p>" + item.content + "</p></li>");
+		var content = $("<li><p>" + item.content + item.id+"</p></li>");
 		var lkForward = this.generateForward(item);
 		var lkComment = this.generateComment(item);
 
@@ -119,7 +119,8 @@ feedsList.prototype = {
 		return itemContainer;
 	},
 	generateForward:function(item){
-		var lkForward = $('<a href="#">Forward('+item.forward_count+')</a>');
+		var count = item.forward_count || 0;
+		var lkForward = $('<a href="#">Forward('+count+')</a>');
 
 		var forward = this._options.forward;
 		if(forward){
@@ -129,7 +130,8 @@ feedsList.prototype = {
 		return lkForward;
 	},
 	generateComment:function (item) {
-		var lkComment = $('<a href="#">Comment('+item.comment_count+')</a>');
+		var count = item.comment_count || 0;
+		var lkComment = $('<a href="#">Comment('+count+')</a>');
 		var comment = this._options.comment;
 		if(comment){
 			lkComment.click(function triggerComment(e){e,comment(item)});

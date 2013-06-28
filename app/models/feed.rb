@@ -1,6 +1,5 @@
 class Feed < ActiveRecord::Base
-  before_create :generate_id
-  before_save :default_values
+  before_save :generate_id,:default_values
 
   attr_accessible :attach_id, :content, :creator_id, :id, :origin_feed_id,
                   :forward_count,:comment_count,
