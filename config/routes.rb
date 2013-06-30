@@ -34,6 +34,10 @@ Microblog::Application.routes.draw do
 
   get 'users/:id/feeds'=>'users#refresh_feeds',:as=>'refresh_feeds'
 
+  get 'feeds/:id/comments'=>'feeds#comments',:as=>'comments'
+
+  post 'feeds/:id/comment'=>'feeds#comment',:as=>'Comment'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

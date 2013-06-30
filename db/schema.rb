@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624021329) do
+ActiveRecord::Schema.define(:version => 20130628133552) do
 
   create_table "attachments", :id => false, :force => true do |t|
     t.integer  "id",         :limit => 8, :null => false
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(:version => 20130624021329) do
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
+
+  create_table "comments", :id => false, :force => true do |t|
+    t.integer  "id",               :limit => 8, :null => false
+    t.string   "content"
+    t.integer  "creator_id",       :limit => 8
+    t.integer  "feed_id",          :limit => 8, :null => false
+    t.integer  "reply_comment_id", :limit => 8
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "comments", ["feed_id"], :name => "index_comments_on_feed_id"
 
   create_table "fans", :id => false, :force => true do |t|
     t.integer  "id",         :limit => 8, :null => false

@@ -124,7 +124,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to user_url}
-      format.json { render json: @page_feeds}
+
+      str_json = @page_feeds.as_json(:except=>[:id,:origin_feed_id],:methods=>[:this_id,:origin_id,:origin_feed_json])
+      format.json { render json: str_json}
     end
   end
 
@@ -138,7 +140,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to home_url}
-      format.json {render json: @page_feeds}
+
+      str_json = @page_feeds.as_json(:except=>[:id,:origin_feed_id],:methods=>[:this_id,:origin_id,:origin_feed_json])
+      format.json { render json:str_json }
     end
   end
 
@@ -162,6 +166,5 @@ class UsersController < ApplicationController
         id
       end
     end
-
 
 end

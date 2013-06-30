@@ -33,6 +33,7 @@
 
 li {
 	list-style-type: none;
+	margin: 2px;
 }
 
 .div-signin-content {
@@ -63,6 +64,10 @@ li {
 	margin: 0px;
 }
 
+.none-padding{
+	padding: 0px;
+}
+
 .truncate-feed-header{
 	width: 250px;
 	white-space: nowrap;
@@ -79,4 +84,19 @@ li {
 .alert-success{
 	visibility: hidden;
 	top:500px;
+}
+
+.inner-feed{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  margin: 0px 0px 5px 0px;
+  padding: 5px;
+  background-color: rgba(221, 221, 221, 0.54);
+  opacity: 1;
+  border: 1px solid #9D9B9B;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }

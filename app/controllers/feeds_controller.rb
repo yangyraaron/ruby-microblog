@@ -1,41 +1,5 @@
 class FeedsController < ApplicationController
-  # GET /feeds
-  # GET /feeds.json
-  def index
-    @feeds = Feed.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @feeds }
-    end
-  end
-
-  # GET /feeds/1
-  # GET /feeds/1.json
-  def show
-    @feed = Feed.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @feed }
-    end
-  end
-
-  # GET /feeds/new
-  # GET /feeds/new.json
-  def new
-    @feed = Feed.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @feed }
-    end
-  end
-
-  # GET /feeds/1/edit
-  def edit
-    @feed = Feed.find(params[:id])
-  end
 
   # POST /feeds
   # POST /feeds.json
@@ -77,31 +41,29 @@ class FeedsController < ApplicationController
     end
   end
 
-  # PUT /feeds/1
-  # PUT /feeds/1.json
-  def update
-    @feed = Feed.find(params[:id])
+  #GET /feeds/:id/comments.json
+  def comments
+    id = params[:id]
+    @comments = Comment.get_feed_comments(id)
 
     respond_to do |format|
-      if @feed.update_attributes(params[:feed])
-        format.html { redirect_to @feed, notice: 'Feed was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @feed.errors, status: :unprocessable_entity }
-      end
+      format.json {render :json=>@comments}
     end
   end
 
-  # DELETE /feeds/1
-  # DELETE /feeds/1.json
-  def destroy
-    @feed = Feed.find(params[:id])
-    @feed.destroy
+  #POST /feeds/:id/comment.json
+  def comment
+    @comment = Comment.new(params[:comment])
+    @comment.creator_id = current_user.user_id
 
     respond_to do |format|
-      format.html { redirect_to feeds_url }
-      format.json { head :no_content }
+      if @comment.save
+        Feed.update_counters(@comment.feed_id,{:comment_count=>1})
+        format.json {render json: @comment.id}
+        else
+          format.json {render json: @comment.errors,status=>:unprocessable_entity}
+        end
     end
   end
+  
 end
